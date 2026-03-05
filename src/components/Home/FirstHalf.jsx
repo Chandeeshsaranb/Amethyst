@@ -4,11 +4,11 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import hero1 from "../../assets/Hero.webp";
-import hero2 from "../../assets/Hero.webp";
-import hero3 from "../../assets/Hero.webp";
-import hero4 from "../../assets/Hero.webp";
-import hero5 from "../../assets/Hero.webp";
+import hero1 from "../../assets/hero/hero1.png";
+import hero2 from "../../assets/hero/hero2.png";
+import hero3 from "../../assets/hero/hero3.png";
+import hero4 from "../../assets/hero/hero4.png";
+import hero5 from "../../assets/hero/hero5.webp";
 
 import img1 from "../../assets/carousel/img.avif";
 import img2 from "../../assets/carousel/img.avif";
@@ -226,7 +226,7 @@ function FirstHalf() {
         cursor: "pointer"
     };
 
-    
+
 
     return (
         <>
@@ -237,7 +237,7 @@ function FirstHalf() {
                         slidesPerView={1}
                         loop={true}
                         autoplay={{
-                            delay: 5000,
+                            delay: 3000,
                             disableOnInteraction: false
                         }}
                         pagination={{ clickable: true }}
