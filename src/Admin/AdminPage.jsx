@@ -1,196 +1,3 @@
-// import React, { useState } from "react";
-
-// export default function AdminPage() {
-//   const [activeSection, setActiveSection] = useState("products");
-//   const [productName, setProductName] = useState("");
-//   const [productImage, setProductImage] = useState(null);
-//   const [preview, setPreview] = useState("");
-
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     if (!file) return;
-
-//     setProductImage(file);
-//     setPreview(URL.createObjectURL(file));
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     if (!productName || !productImage) {
-//       alert("Please fill all fields");
-//       return;
-//     }
-
-//     const newProduct = {
-//       id: Date.now(),
-//       name: productName,
-//       image: preview, // for now storing preview URL
-//     };
-
-//     const existingProducts = JSON.parse(localStorage.getItem("adminProducts") || "[]");
-//     existingProducts.push(newProduct);
-//     localStorage.setItem("adminProducts", JSON.stringify(existingProducts));
-
-//     alert("Product added successfully");
-
-//     setProductName("");
-//     setProductImage(null);
-//     setPreview("");
-//   };
-
-//   const page = {
-//     display: "flex",
-//     minHeight: "100vh",
-//     fontFamily: "Arial, sans-serif",
-//     background: "#f7f7f7",
-//   };
-
-//   const sidebar = {
-//     width: "240px",
-//     background: "#2f2438",
-//     color: "#fff",
-//     padding: "20px 0",
-//   };
-
-//   const logo = {
-//     fontSize: "22px",
-//     fontWeight: "700",
-//     textAlign: "center",
-//     marginBottom: "30px",
-//   };
-
-//   const menuItem = (active) => ({
-//     padding: "14px 24px",
-//     cursor: "pointer",
-//     background: active ? "#4b355d" : "transparent",
-//     borderLeft: active ? "4px solid #c79ae0" : "4px solid transparent",
-//     fontSize: "15px",
-//   });
-
-//   const main = {
-//     flex: 1,
-//     padding: "40px",
-//   };
-
-//   const card = {
-//     maxWidth: "600px",
-//     background: "#fff",
-//     padding: "30px",
-//     borderRadius: "10px",
-//     boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-//   };
-
-//   const title = {
-//     fontSize: "26px",
-//     fontWeight: "700",
-//     marginBottom: "24px",
-//     color: "#222",
-//   };
-
-//   const label = {
-//     display: "block",
-//     fontSize: "14px",
-//     fontWeight: "600",
-//     marginBottom: "8px",
-//     color: "#333",
-//   };
-
-//   const input = {
-//     width: "100%",
-//     height: "44px",
-//     padding: "0 12px",
-//     border: "1px solid #ddd",
-//     borderRadius: "6px",
-//     marginBottom: "18px",
-//     boxSizing: "border-box",
-//     fontSize: "14px",
-//   };
-
-//   const fileInput = {
-//     marginBottom: "18px",
-//   };
-
-//   const button = {
-//     background: "#6f3f8f",
-//     color: "#fff",
-//     border: "none",
-//     padding: "12px 20px",
-//     borderRadius: "6px",
-//     cursor: "pointer",
-//     fontWeight: "600",
-//     fontSize: "14px",
-//   };
-
-//   const previewBox = {
-//     marginTop: "10px",
-//     marginBottom: "20px",
-//   };
-
-//   const previewImage = {
-//     width: "160px",
-//     height: "160px",
-//     objectFit: "cover",
-//     borderRadius: "8px",
-//     border: "1px solid #ddd",
-//   };
-
-//   return (
-//     <div style={page}>
-//       <div style={sidebar}>
-//         <div style={logo}>Admin Panel</div>
-
-//         <div
-//           style={menuItem(activeSection === "products")}
-//           onClick={() => setActiveSection("products")}
-//         >
-//           Products
-//         </div>
-//       </div>
-
-//       <div style={main}>
-//         {activeSection === "products" && (
-//           <div style={card}>
-//             <div style={title}>Add Product</div>
-
-//             <form onSubmit={handleSubmit}>
-//               <label style={label}>Product Name</label>
-//               <input
-//                 type="text"
-//                 placeholder="Enter product name"
-//                 value={productName}
-//                 onChange={(e) => setProductName(e.target.value)}
-//                 style={input}
-//               />
-
-//               <label style={label}>Upload Image</label>
-//               <input
-//                 type="file"
-//                 accept="image/*"
-//                 onChange={handleImageChange}
-//                 style={fileInput}
-//               />
-
-//               {preview && (
-//                 <div style={previewBox}>
-//                   <img src={preview} alt="Preview" style={previewImage} />
-//                 </div>
-//               )}
-
-//               <button type="submit" style={button}>
-//                 Save Product
-//               </button>
-//             </form>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
 
 // import React, { useState } from "react";
 
@@ -270,6 +77,7 @@
 //     productName: "",
 //     productCode: "",
 //     productPrice: "",
+//     productDescription: "",
 //   });
 
 //   const [selectedFilters, setSelectedFilters] = useState({
@@ -325,9 +133,12 @@
 //       !formData.productName.trim() ||
 //       !formData.productCode.trim() ||
 //       !formData.productPrice.trim() ||
+//       !formData.productDescription.trim() ||
 //       !preview
 //     ) {
-//       alert("Please fill product name, product code, product price and upload a photo.");
+//       alert(
+//         "Please fill product name, product code, product price, product description and upload a photo."
+//       );
 //       return;
 //     }
 
@@ -336,6 +147,7 @@
 //       productName: formData.productName,
 //       productCode: formData.productCode,
 //       productPrice: formData.productPrice,
+//       productDescription: formData.productDescription,
 //       categories: selectedFilters,
 //       image: preview,
 //       createdAt: new Date().toISOString(),
@@ -354,6 +166,7 @@
 //       productName: "",
 //       productCode: "",
 //       productPrice: "",
+//       productDescription: "",
 //     });
 
 //     setSelectedFilters({
@@ -426,6 +239,12 @@
 //     marginBottom: "26px",
 //   };
 
+//   const descriptionWrap = {
+//     display: "flex",
+//     flexDirection: "column",
+//     marginBottom: "26px",
+//   };
+
 //   const fieldWrap = {
 //     display: "flex",
 //     flexDirection: "column",
@@ -445,6 +264,17 @@
 //     padding: "0 12px",
 //     fontSize: "14px",
 //     outline: "none",
+//   };
+
+//   const textarea = {
+//     minHeight: "110px",
+//     border: "1px solid #ddd",
+//     borderRadius: "8px",
+//     padding: "12px",
+//     fontSize: "14px",
+//     outline: "none",
+//     resize: "vertical",
+//     fontFamily: "Arial, Helvetica, sans-serif",
 //   };
 
 //   const sectionTitle = {
@@ -571,6 +401,17 @@
 //                 </div>
 //               </div>
 
+//               <div style={descriptionWrap}>
+//                 <label style={label}>Product Description</label>
+//                 <textarea
+//                   name="productDescription"
+//                   value={formData.productDescription}
+//                   onChange={handleInputChange}
+//                   placeholder="Enter product description"
+//                   style={textarea}
+//                 />
+//               </div>
+
 //               <div style={sectionTitle}>Categories</div>
 
 //               {Object.entries(PRODUCT_FILTERS).map(([groupName, options]) => (
@@ -620,6 +461,7 @@
 //     </div>
 //   );
 // }
+
 
 
 
@@ -712,7 +554,6 @@ export default function AdminPage() {
     Size: [],
   });
 
-  const [productImage, setProductImage] = useState(null);
   const [preview, setPreview] = useState("");
 
   const handleInputChange = (e) => {
@@ -741,8 +582,6 @@ export default function AdminPage() {
     const file = e.target.files[0];
     if (!file) return;
 
-    setProductImage(file);
-
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result);
@@ -768,10 +607,10 @@ export default function AdminPage() {
 
     const newProduct = {
       id: Date.now(),
-      productName: formData.productName,
-      productCode: formData.productCode,
-      productPrice: formData.productPrice,
-      productDescription: formData.productDescription,
+      productName: formData.productName.trim(),
+      productCode: formData.productCode.trim(),
+      productPrice: Number(formData.productPrice),
+      productDescription: formData.productDescription.trim(),
       categories: selectedFilters,
       image: preview,
       createdAt: new Date().toISOString(),
@@ -782,9 +621,10 @@ export default function AdminPage() {
     );
 
     existingProducts.push(newProduct);
+
     localStorage.setItem("adminProducts", JSON.stringify(existingProducts));
 
-    alert("Product saved successfully");
+    alert("Product saved successfully in localStorage");
 
     setFormData({
       productName: "",
@@ -801,7 +641,6 @@ export default function AdminPage() {
       Size: [],
     });
 
-    setProductImage(null);
     setPreview("");
   };
 
