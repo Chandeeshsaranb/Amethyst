@@ -1,5 +1,64 @@
 
 
+// import { Routes, Route } from "react-router-dom";
+// import "./App.css";
+
+// import Header from "./Navigation/Header";
+// import Footer from "./Navigation/Footer";
+// import Home from "./components/Home/Home";
+// import MarchEdit from "./marchedit/MarchEdit";
+// import ProductDetail from "./marchedit/ProductDetails";
+
+// function App() {
+//   return (
+//     <>
+//       <Header />
+
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/march-edit" element={<MarchEdit />} />
+//         <Route path="/product/:slug" element={<ProductDetail />} />
+//       </Routes>
+
+//       <Footer />
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+// import { Routes, Route } from "react-router-dom";
+// import "./App.css";
+
+// import Header from "./Navigation/Header";
+// import Footer from "./Navigation/Footer";
+// import Home from "./components/Home/Home";
+// import MarchEdit from "./marchedit/MarchEdit";
+// import ProductDetail from "./marchedit/ProductDetails";
+// import CartPage from "./Cart/cartPage";
+
+// function App() {
+//   return (
+//     <>
+//       <Header />
+
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/march-edit" element={<MarchEdit />} />
+//         <Route path="/product/:slug" element={<ProductDetail />} />
+//         <Route path="/cart" element={<CartPage />} />
+//       </Routes>
+
+//       <Footer />
+//     </>
+//   );
+// }
+
+// export default App;
+
+
+
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -8,6 +67,10 @@ import Footer from "./Navigation/Footer";
 import Home from "./components/Home/Home";
 import MarchEdit from "./marchedit/MarchEdit";
 import ProductDetail from "./marchedit/ProductDetails";
+import CartPage from "./Cart/cartPage";
+
+import Register from "./auth/Register";
+import Login from "./auth/Login";
 
 function App() {
   return (
@@ -18,6 +81,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/march-edit" element={<MarchEdit />} />
         <Route path="/product/:slug" element={<ProductDetail />} />
+        <Route path="/cart" element={<CartPage />} />
+
+        {/* Auth pages */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       <Footer />
