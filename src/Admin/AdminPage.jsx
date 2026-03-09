@@ -1,4 +1,5 @@
-// import React, { useState } from "react";
+
+// import React, { useRef, useState } from "react";
 
 // const PRODUCT_FILTERS = {
 //   "Product Type": [
@@ -71,6 +72,9 @@
 
 // export default function AdminPage() {
 //   const [activeSection, setActiveSection] = useState("products");
+//   const fileInputRef = useRef(null);
+//   const dragItemIndex = useRef(null);
+//   const dragOverItemIndex = useRef(null);
 
 //   const [formData, setFormData] = useState({
 //     productName: "",
@@ -111,22 +115,76 @@
 //     });
 //   };
 
-//   const handleImageChange = (e) => {
+//   const handleImageChange = async (e) => {
 //     const files = Array.from(e.target.files || []);
 //     if (!files.length) return;
 
-//     Promise.all(
+//     const base64Images = await Promise.all(
 //       files.map(
 //         (file) =>
 //           new Promise((resolve) => {
 //             const reader = new FileReader();
-//             reader.onloadend = () => resolve(reader.result);
+//             reader.onloadend = () =>
+//               resolve({
+//                 id: `${Date.now()}-${Math.random()}-${file.name}`,
+//                 src: reader.result,
+//                 name: file.name,
+//               });
 //             reader.readAsDataURL(file);
 //           })
 //       )
-//     ).then((base64Images) => {
-//       setPreviews(base64Images);
+//     );
+
+//     setPreviews((prev) => [...prev, ...base64Images]);
+
+//     if (fileInputRef.current) {
+//       fileInputRef.current.value = "";
+//     }
+//   };
+
+//   const removeImage = (indexToRemove) => {
+//     setPreviews((prev) => prev.filter((_, index) => index !== indexToRemove));
+//   };
+
+//   const handleDragStart = (index) => {
+//     dragItemIndex.current = index;
+//   };
+
+//   const handleDragEnter = (index) => {
+//     dragOverItemIndex.current = index;
+//   };
+
+//   const handleDrop = () => {
+//     const fromIndex = dragItemIndex.current;
+//     const toIndex = dragOverItemIndex.current;
+
+//     if (
+//       fromIndex === null ||
+//       toIndex === null ||
+//       fromIndex === toIndex ||
+//       fromIndex < 0 ||
+//       toIndex < 0
+//     ) {
+//       dragItemIndex.current = null;
+//       dragOverItemIndex.current = null;
+//       return;
+//     }
+
+//     setPreviews((prev) => {
+//       const updated = [...prev];
+//       const draggedItem = updated[fromIndex];
+//       updated.splice(fromIndex, 1);
+//       updated.splice(toIndex, 0, draggedItem);
+//       return updated;
 //     });
+
+//     dragItemIndex.current = null;
+//     dragOverItemIndex.current = null;
+//   };
+
+//   const handleDragEnd = () => {
+//     dragItemIndex.current = null;
+//     dragOverItemIndex.current = null;
 //   };
 
 //   const handleSubmit = (e) => {
@@ -152,7 +210,7 @@
 //       price: Number(formData.productPrice),
 //       description: formData.productDescription.trim(),
 //       categories: selectedFilters,
-//       images: previews,
+//       images: previews.map((item) => item.src),
 //       createdAt: new Date().toISOString(),
 //     };
 
@@ -161,7 +219,6 @@
 //     );
 
 //     existingProducts.push(newProduct);
-
 //     localStorage.setItem("adminProducts", JSON.stringify(existingProducts));
 
 //     alert("Product saved successfully in localStorage");
@@ -182,7 +239,10 @@
 //     });
 
 //     setPreviews([]);
-//     e.target.reset();
+
+//     if (fileInputRef.current) {
+//       fileInputRef.current.value = "";
+//     }
 //   };
 
 //   const page = {
@@ -323,23 +383,64 @@
 //     marginBottom: "16px",
 //   };
 
+//   const hintText = {
+//     fontSize: "13px",
+//     color: "#666",
+//     marginTop: "-6px",
+//     marginBottom: "10px",
+//   };
+
 //   const previewWrap = {
 //     marginTop: "10px",
 //     marginBottom: "20px",
 //   };
 
 //   const previewGrid = {
-//     display: "flex",
-//     flexWrap: "wrap",
-//     gap: "12px",
+//     display: "grid",
+//     gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
+//     gap: "16px",
+//   };
+
+//   const previewCard = {
+//     border: "1px solid #ddd",
+//     borderRadius: "10px",
+//     padding: "10px",
+//     background: "#fff",
+//     cursor: "grab",
 //   };
 
 //   const previewImage = {
-//     width: "140px",
-//     height: "140px",
+//     width: "100%",
+//     height: "160px",
 //     objectFit: "cover",
-//     borderRadius: "10px",
+//     borderRadius: "8px",
 //     border: "1px solid #ddd",
+//     display: "block",
+//     marginBottom: "10px",
+//   };
+
+//   const previewOrder = {
+//     fontSize: "13px",
+//     fontWeight: "700",
+//     marginBottom: "8px",
+//     color: "#444",
+//   };
+
+//   const actionRow = {
+//     display: "flex",
+//     gap: "8px",
+//     flexWrap: "wrap",
+//   };
+
+//   const removeButton = {
+//     border: "none",
+//     background: "#b33939",
+//     color: "#fff",
+//     borderRadius: "6px",
+//     padding: "8px 10px",
+//     cursor: "pointer",
+//     fontSize: "12px",
+//     fontWeight: "700",
 //   };
 
 //   const submitButton = {
@@ -448,24 +549,54 @@
 //               <div style={fieldWrap}>
 //                 <label style={label}>Upload Product Images</label>
 //                 <input
+//                   ref={fileInputRef}
 //                   type="file"
 //                   accept="image/*"
 //                   multiple
 //                   onChange={handleImageChange}
 //                   style={fileInput}
 //                 />
+//                 <div style={hintText}>
+//                   Drag the uploaded images to arrange order. The first image will
+//                   be the main image.
+//                 </div>
 //               </div>
 
 //               {previews.length > 0 && (
 //                 <div style={previewWrap}>
 //                   <div style={previewGrid}>
 //                     {previews.map((img, index) => (
-//                       <img
-//                         key={index}
-//                         src={img}
-//                         alt={`Preview ${index + 1}`}
-//                         style={previewImage}
-//                       />
+//                       <div
+//                         key={img.id}
+//                         style={previewCard}
+//                         draggable
+//                         onDragStart={() => handleDragStart(index)}
+//                         onDragEnter={() => handleDragEnter(index)}
+//                         onDragOver={(e) => e.preventDefault()}
+//                         onDrop={handleDrop}
+//                         onDragEnd={handleDragEnd}
+//                       >
+//                         <img
+//                           src={img.src}
+//                           alt={`Preview ${index + 1}`}
+//                           style={previewImage}
+//                         />
+
+//                         <div style={previewOrder}>
+//                           Image {index + 1}
+//                           {index === 0 ? " (Main image)" : ""}
+//                         </div>
+
+//                         <div style={actionRow}>
+//                           <button
+//                             type="button"
+//                             style={removeButton}
+//                             onClick={() => removeImage(index)}
+//                           >
+//                             Remove
+//                           </button>
+//                         </div>
+//                       </div>
 //                     ))}
 //                   </div>
 //                 </div>
@@ -481,8 +612,6 @@
 //     </div>
 //   );
 // }
-
-
 
 
 import React, { useRef, useState } from "react";
@@ -739,11 +868,17 @@ export default function AdminPage() {
   };
 
   const sidebar = {
-    width: "240px",
+    width: "300px",
+    minWidth: "300px",
     background: "#2f2438",
     color: "#fff",
+    height: "100vh",
+    overflowY: "auto",
+    overflowX: "hidden",
     padding: "24px 0",
-    boxShadow: "2px 0 12px rgba(0,0,0,0.08)",
+    boxSizing: "border-box",
+    position: "sticky",
+    top: 0,
   };
 
   const sidebarTitle = {
@@ -765,6 +900,7 @@ export default function AdminPage() {
   const main = {
     flex: 1,
     padding: "30px",
+    boxSizing: "border-box",
   };
 
   const formCard = {
@@ -784,7 +920,7 @@ export default function AdminPage() {
 
   const grid = {
     display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
     gap: "18px",
     marginBottom: "26px",
   };
@@ -814,6 +950,8 @@ export default function AdminPage() {
     padding: "0 12px",
     fontSize: "14px",
     outline: "none",
+    boxSizing: "border-box",
+    width: "100%",
   };
 
   const textarea = {
@@ -825,6 +963,8 @@ export default function AdminPage() {
     outline: "none",
     resize: "vertical",
     fontFamily: "Arial, Helvetica, sans-serif",
+    boxSizing: "border-box",
+    width: "100%",
   };
 
   const sectionTitle = {
