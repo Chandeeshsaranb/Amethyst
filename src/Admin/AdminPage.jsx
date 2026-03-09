@@ -1,4 +1,6 @@
 
+
+
 // import React, { useRef, useState } from "react";
 
 // const PRODUCT_FILTERS = {
@@ -253,11 +255,17 @@
 //   };
 
 //   const sidebar = {
-//     width: "240px",
+//     width: "300px",
+//     minWidth: "300px",
 //     background: "#2f2438",
 //     color: "#fff",
+//     height: "100vh",
+//     overflowY: "auto",
+//     overflowX: "hidden",
 //     padding: "24px 0",
-//     boxShadow: "2px 0 12px rgba(0,0,0,0.08)",
+//     boxSizing: "border-box",
+//     position: "sticky",
+//     top: 0,
 //   };
 
 //   const sidebarTitle = {
@@ -279,6 +287,7 @@
 //   const main = {
 //     flex: 1,
 //     padding: "30px",
+//     boxSizing: "border-box",
 //   };
 
 //   const formCard = {
@@ -298,7 +307,7 @@
 
 //   const grid = {
 //     display: "grid",
-//     gridTemplateColumns: "repeat(3, 1fr)",
+//     gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
 //     gap: "18px",
 //     marginBottom: "26px",
 //   };
@@ -328,6 +337,8 @@
 //     padding: "0 12px",
 //     fontSize: "14px",
 //     outline: "none",
+//     boxSizing: "border-box",
+//     width: "100%",
 //   };
 
 //   const textarea = {
@@ -339,6 +350,8 @@
 //     outline: "none",
 //     resize: "vertical",
 //     fontFamily: "Arial, Helvetica, sans-serif",
+//     boxSizing: "border-box",
+//     width: "100%",
 //   };
 
 //   const sectionTitle = {
@@ -614,6 +627,7 @@
 // }
 
 
+
 import React, { useRef, useState } from "react";
 
 const PRODUCT_FILTERS = {
@@ -685,8 +699,21 @@ const PRODUCT_FILTERS = {
   Size: ["2.4"],
 };
 
+const SIDEBAR_ITEMS = [
+  { key: "dashboard", label: "Dashboard" },
+  { key: "users", label: "Users" },
+  { key: "categories", label: "Categories" },
+  { key: "add-products", label: "Add Products" },
+  { key: "shipping", label: "Shipping" },
+  { key: "communication", label: "Communication" },
+  { key: "admin-users", label: "Admin Users" },
+  { key: "fee-setting", label: "Fee Setting" },
+  { key: "privacy-policy", label: "Privacy Policy" },
+  { key: "terms-conditions", label: "Terms & Conditions" },
+];
+
 export default function AdminPage() {
-  const [activeSection, setActiveSection] = useState("products");
+  const [activeSection, setActiveSection] = useState("add-products");
   const fileInputRef = useRef(null);
   const dragItemIndex = useRef(null);
   const dragOverItemIndex = useRef(null);
@@ -1086,16 +1113,19 @@ export default function AdminPage() {
       <aside style={sidebar}>
         <div style={sidebarTitle}>Admin Panel</div>
 
-        <div
-          style={menuItem(activeSection === "products")}
-          onClick={() => setActiveSection("products")}
-        >
-          Products
-        </div>
+        {SIDEBAR_ITEMS.map((item) => (
+          <div
+            key={item.key}
+            style={menuItem(activeSection === item.key)}
+            onClick={() => setActiveSection(item.key)}
+          >
+            {item.label}
+          </div>
+        ))}
       </aside>
 
       <main style={main}>
-        {activeSection === "products" && (
+        {activeSection === "add-products" && (
           <div style={formCard}>
             <div style={heading}>Add Product</div>
 
