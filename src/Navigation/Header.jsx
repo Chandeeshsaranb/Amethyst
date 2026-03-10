@@ -1,7 +1,7 @@
 
 
 import { useState, useEffect } from "react";
-import logo from "../assets/famina.jpeg";
+import logo from "../assets/famina-gold.png";
 import { FaUser, FaSearch, FaShoppingBag, FaBars, FaTimes } from "react-icons/fa";
 import { IoChevronDown } from "react-icons/io5";
 import { Link } from "react-router-dom";

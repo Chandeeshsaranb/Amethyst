@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/famina.jpeg";
+import logo from "../assets/famina-gold.png";
 
 export default function Login() {
   const navigate = useNavigate();
