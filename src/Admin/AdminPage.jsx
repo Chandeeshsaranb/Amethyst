@@ -1,6 +1,5 @@
 
 
-
 // import React, { useRef, useState } from "react";
 
 // const PRODUCT_FILTERS = {
@@ -72,8 +71,21 @@
 //   Size: ["2.4"],
 // };
 
+// const SIDEBAR_ITEMS = [
+//   { key: "dashboard", label: "Dashboard" },
+//   { key: "users", label: "Users" },
+//   { key: "categories", label: "Categories" },
+//   { key: "add-products", label: "Add Products" },
+//   { key: "shipping", label: "Shipping" },
+//   { key: "communication", label: "Communication" },
+//   { key: "admin-users", label: "Admin Users" },
+//   { key: "fee-setting", label: "Fee Setting" },
+//   { key: "privacy-policy", label: "Privacy Policy" },
+//   { key: "terms-conditions", label: "Terms & Conditions" },
+// ];
+
 // export default function AdminPage() {
-//   const [activeSection, setActiveSection] = useState("products");
+//   const [activeSection, setActiveSection] = useState("add-products");
 //   const fileInputRef = useRef(null);
 //   const dragItemIndex = useRef(null);
 //   const dragOverItemIndex = useRef(null);
@@ -473,16 +485,19 @@
 //       <aside style={sidebar}>
 //         <div style={sidebarTitle}>Admin Panel</div>
 
-//         <div
-//           style={menuItem(activeSection === "products")}
-//           onClick={() => setActiveSection("products")}
-//         >
-//           Products
-//         </div>
+//         {SIDEBAR_ITEMS.map((item) => (
+//           <div
+//             key={item.key}
+//             style={menuItem(activeSection === item.key)}
+//             onClick={() => setActiveSection(item.key)}
+//           >
+//             {item.label}
+//           </div>
+//         ))}
 //       </aside>
 
 //       <main style={main}>
-//         {activeSection === "products" && (
+//         {activeSection === "add-products" && (
 //           <div style={formCard}>
 //             <div style={heading}>Add Product</div>
 
@@ -625,6 +640,7 @@
 //     </div>
 //   );
 // }
+
 
 
 
@@ -928,6 +944,9 @@ export default function AdminPage() {
     flex: 1,
     padding: "30px",
     boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-start",
   };
 
   const formCard = {
@@ -936,6 +955,7 @@ export default function AdminPage() {
     padding: "28px",
     boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
     maxWidth: "1100px",
+    width: "100%",
   };
 
   const heading = {
