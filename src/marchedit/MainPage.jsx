@@ -1,3 +1,4 @@
+
 // import React, { useState, useMemo } from "react";
 // import { useNavigate } from "react-router-dom";
 
@@ -12,14 +13,16 @@
 //   const normalizedProducts = useMemo(() => {
 //     return (products || []).map((product) => ({
 //       ...product,
+//       id: product.id,
 //       name: product.name || "",
 //       price: Number(product.price || 0),
 //       images: Array.isArray(product.images) ? product.images : [],
+//       createdAt: product.createdAt || "",
 //     }));
 //   }, [products]);
 
 //   const sortedProducts = useMemo(() => {
-//     let arr = [...normalizedProducts];
+//     const arr = [...normalizedProducts];
 
 //     switch (sortKey) {
 //       case "priceLow":

@@ -10,11 +10,11 @@ import MarchEdit from "./marchedit/MarchEdit";
 import ProductDetail from "./marchedit/ProductDetails";
 import CartPage from "./Cart/cartPage";
 import PaymentPage from "./Cart/PaymentPage";
-
-import Register from "./auth/Register";
 import Login from "./auth/Login";
 
 import AdminPage from "./Admin/AdminPage";
+
+import OtpPage from "./auth/otpPage";
 
 function App() {
   return (
@@ -24,15 +24,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/march-edit" element={<MarchEdit />} />
-        <Route path="/product/:id" element={<ProductDetail />} />        
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
 
         {/* Payment */}
         <Route path="/payment" element={<PaymentPage />} />   {/* ✅ Added */}
-
-        {/* Auth pages */}
-        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/otp" element={<OtpPage />} />
 
         {/* Admin Page */}
         <Route path="/admin" element={<AdminPage />} />

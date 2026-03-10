@@ -1,23 +1,25 @@
 
-
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/famina.jpeg";
 
-export default function Login() {
+export default function OtpPage() {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+
+  const email = location.state?.email || "your@email.com";
+  const [otp, setOtp] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email) {
-      alert("Please enter your email");
+    if (!otp.trim()) {
+      alert("Please enter the code");
       return;
     }
 
-    navigate("/otp", { state: { email } });
+    navigate("/");
+    window.scrollTo(0, 0);
   };
 
   const page = {
@@ -64,33 +66,59 @@ export default function Login() {
 
   const title = {
     textAlign: "center",
+    marginBottom: "6px",
+  };
+
+  const subText = {
+    textAlign: "center",
+    fontSize: "14px",
+    color: "#666",
     marginBottom: "18px",
+  };
+
+  const backLink = {
+    background: "transparent",
+    border: "none",
+    padding: 0,
+    color: "#6f3f8f",
+    fontSize: "14px",
+    cursor: "pointer",
+    marginTop: "10px",
   };
 
   return (
     <div style={page}>
       <form style={box} onSubmit={handleSubmit}>
         <div style={{ textAlign: "center", marginBottom: "16px" }}>
-          <img
-            src={logo}
-            alt="Femian Logo"
-            style={{ height: "55px" }}
-          />
+          <img src={logo} alt="Femina Logo" style={{ height: "55px" }} />
         </div>
 
-        <h2 style={title}>Login</h2>
+        <h2 style={title}>Enter Code</h2>
+
+        <div style={subText}>Sent to {email}</div>
 
         <input
           style={input}
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+          type="text"
+          inputMode="numeric"
+          maxLength={6}
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={(e) =>
+            setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+          }
         />
 
         <button type="submit" style={button}>
-          Continue
+          Submit
+        </button>
+
+        <button
+          type="button"
+          style={backLink}
+          onClick={() => navigate("/login")}
+        >
+          Sign in with a different email
         </button>
       </form>
     </div>

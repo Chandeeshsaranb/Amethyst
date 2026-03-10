@@ -1,192 +1,53 @@
-// import React from "react";
 
-// export default function Filter({
-//   productTypes,
-//   occasions,
-//   selectedTypes,
-//   selectedOccasions,
-//   setSelectedTypes,
-//   setSelectedOccasions,
-//   priceRange,
-//   setPriceRange,
-//   maxPrice,
-// }) {
-//   const toggleType = (type) => {
-//     if (selectedTypes.includes(type)) {
-//       setSelectedTypes(selectedTypes.filter((item) => item !== type));
-//     } else {
-//       setSelectedTypes([...selectedTypes, type]);
-//     }
-//   };
-
-//   const toggleOccasion = (occasion) => {
-//     if (selectedOccasions.includes(occasion)) {
-//       setSelectedOccasions(
-//         selectedOccasions.filter((item) => item !== occasion)
-//       );
-//     } else {
-//       setSelectedOccasions([...selectedOccasions, occasion]);
-//     }
-//   };
-
-//   const sidebar = {
-//     width: "280px",
-//     minWidth: "280px",
-//     background: "#f7f7f7",
-//     padding: "20px",
-//     boxSizing: "border-box",
-//     borderRight: "1px solid #e5e5e5",
-//     height: "100%",
-//     overflowY: "auto",
-//   };
-
-//   const section = {
-//     marginBottom: "30px",
-//   };
-
-//   const heading = {
-//     fontSize: "13px",
-//     letterSpacing: "3px",
-//     fontWeight: "600",
-//     marginBottom: "18px",
-//     color: "#333",
-//   };
-
-//   const item = {
-//     display: "flex",
-//     alignItems: "center",
-//     gap: "10px",
-//     marginBottom: "12px",
-//     fontSize: "15px",
-//     color: "#444",
-//     cursor: "pointer",
-//   };
-
-//   const checkbox = {
-//     width: "16px",
-//     height: "16px",
-//     accentColor: "#b58bb7",
-//     cursor: "pointer",
-//   };
-
-//   const priceTextWrap = {
-//     display: "flex",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     marginBottom: "12px",
-//     fontSize: "14px",
-//     color: "#333",
-//   };
-
-//   const range = {
-//     width: "100%",
-//     accentColor: "#000",
-//     cursor: "pointer",
-//   };
-
-//   return (
-//     <div style={sidebar}>
-//       <div style={section}>
-//         <div style={heading}>PRODUCT TYPE</div>
-//         {productTypes.map((type, index) => (
-//           <label key={index} style={item}>
-//             <input
-//               type="checkbox"
-//               style={checkbox}
-//               checked={selectedTypes.includes(type.name)}
-//               onChange={() => toggleType(type.name)}
-//             />
-//             <span>
-//               {type.name} ({type.count})
-//             </span>
-//           </label>
-//         ))}
-//       </div>
-
-//       <div style={section}>
-//         <div style={heading}>PRICE</div>
-//         <div style={priceTextWrap}>
-//           <span>₹ 0</span>
-//           <span>₹ {priceRange.toLocaleString("en-IN")}</span>
-//         </div>
-//         <input
-//           type="range"
-//           min="0"
-//           max={maxPrice}
-//           value={priceRange}
-//           onChange={(e) => setPriceRange(Number(e.target.value))}
-//           style={range}
-//         />
-//       </div>
-
-//       <div style={section}>
-//         <div style={heading}>OCCASIONS</div>
-//         {occasions.map((occasion, index) => (
-//           <label key={index} style={item}>
-//             <input
-//               type="checkbox"
-//               style={checkbox}
-//               checked={selectedOccasions.includes(occasion.name)}
-//               onChange={() => toggleOccasion(occasion.name)}
-//             />
-//             <span>
-//               {occasion.name} ({occasion.count})
-//             </span>
-//           </label>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-// import React, { useState } from "react";
+// import React, { useMemo, useState } from "react";
 // import { IoChevronUp, IoChevronDown } from "react-icons/io5";
 
 // export default function Filter({
-//   productTypes,
-//   occasions,
-//   finishAndDesign,
-//   jewelTypes,
-//   sizes,
-//   selectedTypes,
-//   selectedOccasions,
-//   selectedFinishDesign,
-//   selectedJewelTypes,
-//   selectedSizes,
-//   setSelectedTypes,
-//   setSelectedOccasions,
-//   setSelectedFinishDesign,
-//   setSelectedJewelTypes,
-//   setSelectedSizes,
+//   products = [],
+//   selectedFilters,
+//   setSelectedFilters,
 //   priceRange,
 //   setPriceRange,
 //   maxPrice,
 // }) {
-//   const [openSections, setOpenSections] = useState({
-//     productType: true,
-//     price: true,
-//     occasions: true,
-//     finishAndDesign: true,
-//     jewelType: true,
-//     size: true,
-//   });
+//   const [openSections, setOpenSections] = useState({});
+
+//   const productFilters = useMemo(() => {
+//     try {
+//       return JSON.parse(localStorage.getItem("adminProductFilters")) || {};
+//     } catch (error) {
+//       return {};
+//     }
+//   }, []);
 
 //   const toggleSection = (section) => {
 //     setOpenSections((prev) => ({
 //       ...prev,
-//       [section]: !prev[section],
+//       [section]: prev[section] === undefined ? false : !prev[section],
 //     }));
 //   };
 
-//   const toggleItem = (value, selectedList, setSelectedList) => {
-//     if (selectedList.includes(value)) {
-//       setSelectedList(selectedList.filter((item) => item !== value));
+//   const toggleItem = (categoryName, value) => {
+//     const currentValues = selectedFilters[categoryName] || [];
+
+//     if (currentValues.includes(value)) {
+//       setSelectedFilters((prev) => ({
+//         ...prev,
+//         [categoryName]: currentValues.filter((item) => item !== value),
+//       }));
 //     } else {
-//       setSelectedList([...selectedList, value]);
+//       setSelectedFilters((prev) => ({
+//         ...prev,
+//         [categoryName]: [...currentValues, value],
+//       }));
 //     }
+//   };
+
+//   const getOptionCount = (categoryName, optionValue) => {
+//     return products.filter((product) => {
+//       const productCategoryValues = product?.categories?.[categoryName] || [];
+//       return productCategoryValues.includes(optionValue);
+//     }).length;
 //   };
 
 //   const sidebar = {
@@ -256,21 +117,20 @@
 //     accentColor: "#000",
 //   };
 
-//   const renderCheckboxList = (items, selectedList, setSelectedList) =>
-//     items.map((itemObj, index) => {
-//       const label = itemObj.name;
-//       const count = itemObj.count;
+//   const renderCheckboxList = (categoryName, options) =>
+//     options.map((option, index) => {
+//       const count = getOptionCount(categoryName, option);
 
 //       return (
-//         <label key={index} style={item}>
+//         <label key={`${categoryName}-${index}`} style={item}>
 //           <input
 //             type="checkbox"
 //             style={checkbox}
-//             checked={selectedList.includes(label)}
-//             onChange={() => toggleItem(label, selectedList, setSelectedList)}
+//             checked={(selectedFilters[categoryName] || []).includes(option)}
+//             onChange={() => toggleItem(categoryName, option)}
 //           />
 //           <span>
-//             {label} {typeof count === "number" ? `(${count})` : ""}
+//             {option} ({count})
 //           </span>
 //         </label>
 //       );
@@ -278,27 +138,38 @@
 
 //   return (
 //     <div style={sidebar}>
-//       {/* PRODUCT TYPE */}
-//       <div style={section}>
-//         <div style={header} onClick={() => toggleSection("productType")}>
-//           <div style={heading}>Product Type</div>
-//           {openSections.productType ? <IoChevronUp /> : <IoChevronDown />}
-//         </div>
-//         {openSections.productType &&
-//           renderCheckboxList(productTypes, selectedTypes, setSelectedTypes)}
-//       </div>
+//       {Object.entries(productFilters).map(([categoryName, options]) => {
+//         const sectionKey = categoryName;
+//         const isOpen =
+//           openSections[sectionKey] === undefined ? true : openSections[sectionKey];
 
-//       {/* PRICE */}
+//         return (
+//           <div key={categoryName} style={section}>
+//             <div style={header} onClick={() => toggleSection(sectionKey)}>
+//               <div style={heading}>{categoryName}</div>
+//               {isOpen ? <IoChevronUp /> : <IoChevronDown />}
+//             </div>
+
+//             {isOpen && renderCheckboxList(categoryName, options)}
+//           </div>
+//         );
+//       })}
+
 //       <div style={section}>
 //         <div style={header} onClick={() => toggleSection("price")}>
 //           <div style={heading}>Price</div>
-//           {openSections.price ? <IoChevronUp /> : <IoChevronDown />}
+//           {(openSections.price === undefined ? true : openSections.price) ? (
+//             <IoChevronUp />
+//           ) : (
+//             <IoChevronDown />
+//           )}
 //         </div>
-//         {openSections.price && (
+
+//         {(openSections.price === undefined ? true : openSections.price) && (
 //           <>
 //             <div style={priceTextWrap}>
 //               <span>₹ 0</span>
-//               <span>₹ {priceRange.toLocaleString("en-IN")}</span>
+//               <span>₹ {Number(priceRange || 0).toLocaleString("en-IN")}</span>
 //             </div>
 //             <input
 //               type="range"
@@ -311,110 +182,79 @@
 //           </>
 //         )}
 //       </div>
-
-//       {/* OCCASIONS */}
-//       <div style={section}>
-//         <div style={header} onClick={() => toggleSection("occasions")}>
-//           <div style={heading}>Occasions</div>
-//           {openSections.occasions ? <IoChevronUp /> : <IoChevronDown />}
-//         </div>
-//         {openSections.occasions &&
-//           renderCheckboxList(
-//             occasions,
-//             selectedOccasions,
-//             setSelectedOccasions
-//           )}
-//       </div>
-
-//       {/* FINISH AND DESIGN */}
-//       <div style={section}>
-//         <div style={header} onClick={() => toggleSection("finishAndDesign")}>
-//           <div style={heading}>Finish and Design</div>
-//           {openSections.finishAndDesign ? <IoChevronUp /> : <IoChevronDown />}
-//         </div>
-//         {openSections.finishAndDesign &&
-//           renderCheckboxList(
-//             finishAndDesign,
-//             selectedFinishDesign,
-//             setSelectedFinishDesign
-//           )}
-//       </div>
-
-//       {/* JEWEL TYPE */}
-//       <div style={section}>
-//         <div style={header} onClick={() => toggleSection("jewelType")}>
-//           <div style={heading}>Jewel Type</div>
-//           {openSections.jewelType ? <IoChevronUp /> : <IoChevronDown />}
-//         </div>
-//         {openSections.jewelType &&
-//           renderCheckboxList(
-//             jewelTypes,
-//             selectedJewelTypes,
-//             setSelectedJewelTypes
-//           )}
-//       </div>
-
-//       {/* SIZE */}
-//       <div style={section}>
-//         <div style={header} onClick={() => toggleSection("size")}>
-//           <div style={heading}>Size</div>
-//           {openSections.size ? <IoChevronUp /> : <IoChevronDown />}
-//         </div>
-//         {openSections.size &&
-//           renderCheckboxList(sizes, selectedSizes, setSelectedSizes)}
-//       </div>
 //     </div>
 //   );
 // }
 
 
 
-import React, { useState } from "react";
+
+import React, { useMemo, useState } from "react";
 import { IoChevronUp, IoChevronDown } from "react-icons/io5";
 
 export default function Filter({
-  productTypes,
-  occasions,
-  finishAndDesign,
-  jewelTypes,
-  sizes,
-  selectedTypes,
-  selectedOccasions,
-  selectedFinishDesign,
-  selectedJewelTypes,
-  selectedSizes,
-  setSelectedTypes,
-  setSelectedOccasions,
-  setSelectedFinishDesign,
-  setSelectedJewelTypes,
-  setSelectedSizes,
+  products = [],
+  selectedFilters,
+  setSelectedFilters,
   priceRange,
   setPriceRange,
   maxPrice,
 }) {
-  const [openSections, setOpenSections] = useState({
-    productType: true,
-    price: true,
-    occasions: true,
-    finishAndDesign: true,
-    jewelType: true,
-    size: true,
-  });
+  const [openSections, setOpenSections] = useState({});
+
+  const productFilters = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("adminProductFilters")) || {};
+    } catch (error) {
+      return {};
+    }
+  }, []);
 
   const toggleSection = (section) => {
     setOpenSections((prev) => ({
       ...prev,
-      [section]: !prev[section],
+      [section]: prev[section] === undefined ? false : !prev[section],
     }));
   };
 
-  const toggleItem = (value, selectedList, setSelectedList) => {
-    if (selectedList.includes(value)) {
-      setSelectedList(selectedList.filter((item) => item !== value));
+  const toggleItem = (categoryName, value) => {
+    const currentValues = selectedFilters[categoryName] || [];
+
+    if (currentValues.includes(value)) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [categoryName]: currentValues.filter((item) => item !== value),
+      }));
     } else {
-      setSelectedList([...selectedList, value]);
+      setSelectedFilters((prev) => ({
+        ...prev,
+        [categoryName]: [...currentValues, value],
+      }));
     }
   };
+
+  const getOptionCount = (categoryName, optionValue) => {
+    return products.filter((product) => {
+      const productCategoryValues = product?.categories?.[categoryName] || [];
+      return productCategoryValues.includes(optionValue);
+    }).length;
+  };
+
+  const visibleProductFilters = useMemo(() => {
+    const filtered = {};
+
+    Object.entries(productFilters).forEach(([categoryName, options]) => {
+      const validOptions = (options || []).filter(
+        (option) => getOptionCount(categoryName, option) > 0
+      );
+
+      if (validOptions.length > 0) {
+        filtered[categoryName] = validOptions;
+      }
+    });
+
+    return filtered;
+  }, [productFilters, products]);
 
   const sidebar = {
     width: "280px",
@@ -483,21 +323,25 @@ export default function Filter({
     accentColor: "#000",
   };
 
-  const renderCheckboxList = (items, selectedList, setSelectedList) =>
-    items.map((itemObj, index) => {
-      const label = itemObj.name;
-      const count = itemObj.count;
+  const emptyText = {
+    fontSize: "13px",
+    color: "#777",
+  };
+
+  const renderCheckboxList = (categoryName, options) =>
+    options.map((option, index) => {
+      const count = getOptionCount(categoryName, option);
 
       return (
-        <label key={index} style={item}>
+        <label key={`${categoryName}-${index}`} style={item}>
           <input
             type="checkbox"
             style={checkbox}
-            checked={selectedList.includes(label)}
-            onChange={() => toggleItem(label, selectedList, setSelectedList)}
+            checked={(selectedFilters[categoryName] || []).includes(option)}
+            onChange={() => toggleItem(categoryName, option)}
           />
           <span>
-            {label} ({count})
+            {option} ({count})
           </span>
         </label>
       );
@@ -505,21 +349,41 @@ export default function Filter({
 
   return (
     <div style={sidebar}>
-      <div style={section}>
-        <div style={header} onClick={() => toggleSection("productType")}>
-          <div style={heading}>Product Type</div>
-          {openSections.productType ? <IoChevronUp /> : <IoChevronDown />}
-        </div>
-        {openSections.productType &&
-          renderCheckboxList(productTypes, selectedTypes, setSelectedTypes)}
-      </div>
+      {Object.entries(visibleProductFilters).map(([categoryName, options]) => {
+        const sectionKey = categoryName;
+        const isOpen =
+          openSections[sectionKey] === undefined
+            ? true
+            : openSections[sectionKey];
+
+        return (
+          <div key={categoryName} style={section}>
+            <div style={header} onClick={() => toggleSection(sectionKey)}>
+              <div style={heading}>{categoryName}</div>
+              {isOpen ? <IoChevronUp /> : <IoChevronDown />}
+            </div>
+
+            {isOpen &&
+              (options.length > 0 ? (
+                renderCheckboxList(categoryName, options)
+              ) : (
+                <div style={emptyText}>No items available.</div>
+              ))}
+          </div>
+        );
+      })}
 
       <div style={section}>
         <div style={header} onClick={() => toggleSection("price")}>
           <div style={heading}>Price</div>
-          {openSections.price ? <IoChevronUp /> : <IoChevronDown />}
+          {(openSections.price === undefined ? true : openSections.price) ? (
+            <IoChevronUp />
+          ) : (
+            <IoChevronDown />
+          )}
         </div>
-        {openSections.price && (
+
+        {(openSections.price === undefined ? true : openSections.price) && (
           <>
             <div style={priceTextWrap}>
               <span>₹ 0</span>
@@ -535,54 +399,6 @@ export default function Filter({
             />
           </>
         )}
-      </div>
-
-      <div style={section}>
-        <div style={header} onClick={() => toggleSection("occasions")}>
-          <div style={heading}>Occasions</div>
-          {openSections.occasions ? <IoChevronUp /> : <IoChevronDown />}
-        </div>
-        {openSections.occasions &&
-          renderCheckboxList(
-            occasions,
-            selectedOccasions,
-            setSelectedOccasions
-          )}
-      </div>
-
-      <div style={section}>
-        <div style={header} onClick={() => toggleSection("finishAndDesign")}>
-          <div style={heading}>Finish and Design</div>
-          {openSections.finishAndDesign ? <IoChevronUp /> : <IoChevronDown />}
-        </div>
-        {openSections.finishAndDesign &&
-          renderCheckboxList(
-            finishAndDesign,
-            selectedFinishDesign,
-            setSelectedFinishDesign
-          )}
-      </div>
-
-      <div style={section}>
-        <div style={header} onClick={() => toggleSection("jewelType")}>
-          <div style={heading}>Jewel Type</div>
-          {openSections.jewelType ? <IoChevronUp /> : <IoChevronDown />}
-        </div>
-        {openSections.jewelType &&
-          renderCheckboxList(
-            jewelTypes,
-            selectedJewelTypes,
-            setSelectedJewelTypes
-          )}
-      </div>
-
-      <div style={section}>
-        <div style={header} onClick={() => toggleSection("size")}>
-          <div style={heading}>Size</div>
-          {openSections.size ? <IoChevronUp /> : <IoChevronDown />}
-        </div>
-        {openSections.size &&
-          renderCheckboxList(sizes, selectedSizes, setSelectedSizes)}
       </div>
     </div>
   );

@@ -290,7 +290,7 @@ function Header() {
               </div>
             )}
 
-            <Link to="/register" style={iconStyle}>
+            <Link to="/login" style={iconStyle}>
               <FaUser />
             </Link>
 
