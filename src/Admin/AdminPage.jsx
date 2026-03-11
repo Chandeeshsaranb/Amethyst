@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useRef, useState } from "react";
 
 const DEFAULT_PRODUCT_FILTERS = {
