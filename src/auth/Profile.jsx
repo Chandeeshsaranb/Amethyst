@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/famina-gold.png";
+import logo from "../assets/femina.png";
 import { FiUser, FiChevronUp, FiChevronDown, FiEdit2, FiInfo } from "react-icons/fi";
 
 export default function ProfilePage() {

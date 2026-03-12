@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../assets/famina-gold.png";
+import logo from "../assets/femina.png";
 
 export default function OtpPage() {
   const location = useLocation();
