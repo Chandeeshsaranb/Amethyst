@@ -1,3 +1,203 @@
+// // // // import React, { useState } from "react";
+// // // // import { Link, useNavigate } from "react-router-dom";
+// // // // import logo from "../assets/femina.png";
+
+// // // // export default function Register() {
+// // // //     const navigate = useNavigate();
+
+// // // //     const [form, setForm] = useState({
+// // // //         name: "",
+// // // //         email: "",
+// // // //         phone: "",
+// // // //         password: "",
+// // // //         confirm: "",
+// // // //     });
+
+// // // //     const [loading, setLoading] = useState(false);
+
+// // // //     const handleChange = (e) => {
+// // // //         setForm({ ...form, [e.target.name]: e.target.value });
+// // // //     };
+
+// // // //     const handleSubmit = async (e) => {
+// // // //         e.preventDefault();
+
+// // // //         if (form.password !== form.confirm) {
+// // // //             alert("Passwords do not match");
+// // // //             return;
+// // // //         }
+
+// // // //         setLoading(true);
+
+// // // //         try {
+// // // //             const response = await fetch(
+// // // //                 "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+// // // //                 {
+// // // //                     method: "POST",
+// // // //                     headers: {
+// // // //                         "Content-Type": "application/json",
+// // // //                     },
+// // // //                     body: JSON.stringify({
+// // // //                         name: form.name,
+// // // //                         email: form.email,
+// // // //                         phone: form.phone,
+// // // //                         password: form.password,
+// // // //                     }),
+// // // //                 }
+// // // //             );
+
+// // // //             const data = await response.json();
+// // // //             console.log("ResponseData :", data);
+// // // //             if (!response.ok) {
+// // // //                 console.log("ResponsecReg :", response);
+// // // //                 alert(data.message || "Registration failed");
+// // // //                 setLoading(false);
+// // // //                 return;
+// // // //             }
+
+// // // //             // Save pending user/email for OTP verification page if needed
+// // // //             localStorage.setItem(
+// // // //                 "pendingUser",
+// // // //                 JSON.stringify({
+// // // //                     name: form.name,
+// // // //                     email: form.email,
+// // // //                     phone: form.phone,
+// // // //                     password: form.password,
+// // // //                 })
+// // // //             );
+
+// // // //             alert(data.message || "Registration successful. OTP sent.");
+
+// // // //             navigate("/otp", {
+// // // //                 state: {
+// // // //                     email: form.email,
+// // // //                     phone: form.phone,
+// // // //                     from: "register",
+// // // //                 },
+// // // //             });
+// // // //         } catch (error) {
+// // // //             console.error("Register API error:", error);
+// // // //             alert("Something went wrong while registering");
+// // // //         } finally {
+// // // //             setLoading(false);
+// // // //         }
+// // // //     };
+
+// // // //     const page = {
+// // // //         display: "flex",
+// // // //         justifyContent: "center",
+// // // //         alignItems: "center",
+// // // //         padding: "40px 0",
+// // // //         background: "#fafafa",
+// // // //         fontFamily: "Arial, Helvetica, sans-serif",
+// // // //         minHeight: "100vh",
+// // // //     };
+
+// // // //     const box = {
+// // // //         width: "380px",
+// // // //         background: "#fff",
+// // // //         padding: "40px",
+// // // //         borderRadius: "8px",
+// // // //         boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+// // // //     };
+
+// // // //     const input = {
+// // // //         width: "100%",
+// // // //         height: "42px",
+// // // //         marginBottom: "12px",
+// // // //         border: "1px solid #ddd",
+// // // //         padding: "0 12px",
+// // // //         borderRadius: "4px",
+// // // //         boxSizing: "border-box",
+// // // //         outline: "none",
+// // // //     };
+
+// // // //     const button = {
+// // // //         width: "100%",
+// // // //         height: "44px",
+// // // //         border: "none",
+// // // //         background: loading ? "#9b7bb1" : "#6f3f8f",
+// // // //         color: "#fff",
+// // // //         fontWeight: "600",
+// // // //         borderRadius: "4px",
+// // // //         cursor: loading ? "not-allowed" : "pointer",
+// // // //         marginTop: "10px",
+// // // //     };
+
+// // // //     return (
+// // // //         <div style={page}>
+// // // //             <form style={box} onSubmit={handleSubmit}>
+// // // //                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
+// // // //                     <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
+// // // //                 </div>
+
+// // // //                 <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+// // // //                     Create Account
+// // // //                 </h2>
+
+// // // //                 <input
+// // // //                     style={input}
+// // // //                     name="name"
+// // // //                     placeholder="Full Name"
+// // // //                     value={form.name}
+// // // //                     onChange={handleChange}
+// // // //                     required
+// // // //                 />
+
+// // // //                 <input
+// // // //                     style={input}
+// // // //                     type="email"
+// // // //                     name="email"
+// // // //                     placeholder="Email"
+// // // //                     value={form.email}
+// // // //                     onChange={handleChange}
+// // // //                     required
+// // // //                 />
+
+// // // //                 <input
+// // // //                     style={input}
+// // // //                     type="tel"
+// // // //                     name="phone"
+// // // //                     placeholder="Phone Number"
+// // // //                     value={form.phone}
+// // // //                     onChange={handleChange}
+// // // //                     required
+// // // //                 />
+
+// // // //                 <input
+// // // //                     style={input}
+// // // //                     type="password"
+// // // //                     name="password"
+// // // //                     placeholder="Password"
+// // // //                     value={form.password}
+// // // //                     onChange={handleChange}
+// // // //                     required
+// // // //                 />
+
+// // // //                 <input
+// // // //                     style={input}
+// // // //                     type="password"
+// // // //                     name="confirm"
+// // // //                     placeholder="Confirm Password"
+// // // //                     value={form.confirm}
+// // // //                     onChange={handleChange}
+// // // //                     required
+// // // //                 />
+
+// // // //                 <button type="submit" style={button} disabled={loading}>
+// // // //                     {loading ? "Registering..." : "Register"}
+// // // //                 </button>
+
+// // // //                 <p style={{ textAlign: "center", marginTop: "15px" }}>
+// // // //                     Already have an account? <Link to="/login">Login</Link>
+// // // //                 </p>
+// // // //             </form>
+// // // //         </div>
+// // // //     );
+// // // // }
+
+
+
 
 // // // import React, { useState } from "react";
 // // // import { Link, useNavigate } from "react-router-dom";
@@ -14,39 +214,95 @@
 // // //         confirm: "",
 // // //     });
 
+// // //     const [loading, setLoading] = useState(false);
+
 // // //     const handleChange = (e) => {
-// // //         setForm({ ...form, [e.target.name]: e.target.value });
+// // //         const { name, value } = e.target;
+
+// // //         // allow only numbers for phone
+// // //         if (name === "phone") {
+// // //             const numericValue = value.replace(/\D/g, "");
+// // //             setForm({ ...form, phone: numericValue });
+// // //             return;
+// // //         }
+
+// // //         // password validation while typing
+// // //         if (name === "password") {
+// // //             if (value.length < 6) {
+// // //                 console.log("Password must be at least 6 characters");
+// // //             }
+// // //         }
+
+// // //         setForm({ ...form, [name]: value });
 // // //     };
 
-// // //     const handleSubmit = (e) => {
+// // //     const handleSubmit = async (e) => {
 // // //         e.preventDefault();
+
+// // //         if (form.password.length < 6) {
+// // //             alert("Password must be at least 6 characters long");
+// // //             return;
+// // //         }
 
 // // //         if (form.password !== form.confirm) {
 // // //             alert("Passwords do not match");
 // // //             return;
 // // //         }
 
-// // //         const users = JSON.parse(localStorage.getItem("users") || "[]");
+// // //         setLoading(true);
 
-// // //         const exists = users.find((u) => u.email === form.email);
+// // //         try {
+// // //             const response = await fetch(
+// // //                 "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+// // //                 {
+// // //                     method: "POST",
+// // //                     headers: {
+// // //                         "Content-Type": "application/json",
+// // //                     },
+// // //                     body: JSON.stringify({
+// // //                         name: form.name,
+// // //                         email: form.email,
+// // //                         phone: form.phone,
+// // //                         password: form.password,
+// // //                     }),
+// // //                 }
+// // //             );
 
-// // //         if (exists) {
-// // //             alert("User already exists");
-// // //             return;
+// // //             const data = await response.json();
+// // //             console.log("ResponseData :", data);
+
+// // //             if (!response.ok) {
+// // //                 console.log("ResponsecReg :", response);
+// // //                 alert(data.message || "Registration failed");
+// // //                 setLoading(false);
+// // //                 return;
+// // //             }
+
+// // //             localStorage.setItem(
+// // //                 "pendingUser",
+// // //                 JSON.stringify({
+// // //                     name: form.name,
+// // //                     email: form.email,
+// // //                     phone: form.phone,
+// // //                     password: form.password,
+// // //                 })
+// // //             );
+
+// // //             alert(data.message || "Registration successful. OTP sent.");
+
+// // //             navigate("/otp", {
+// // //                 state: {
+// // //                     email: form.email,
+// // //                     phone: form.phone,
+// // //                     from: "register",
+// // //                 },
+// // //             });
+// // //         } catch (error) {
+// // //             console.error("Register API error:", error);
+// // //             alert("Something went wrong while registering");
+// // //         } finally {
+// // //             setLoading(false);
 // // //         }
-
-// // //         users.push({
-// // //             name: form.name,
-// // //             email: form.email,
-// // //             phone: form.phone,
-// // //             password: form.password,
-// // //         });
-
-// // //         localStorage.setItem("users", JSON.stringify(users));
-
-// // //         alert("Registration Successful");
-
-// // //         navigate("/login");
 // // //     };
 
 // // //     const page = {
@@ -56,6 +312,7 @@
 // // //         padding: "40px 0",
 // // //         background: "#fafafa",
 // // //         fontFamily: "Arial, Helvetica, sans-serif",
+// // //         minHeight: "100vh",
 // // //     };
 
 // // //     const box = {
@@ -81,11 +338,11 @@
 // // //         width: "100%",
 // // //         height: "44px",
 // // //         border: "none",
-// // //         background: "#6f3f8f",
+// // //         background: loading ? "#9b7bb1" : "#6f3f8f",
 // // //         color: "#fff",
 // // //         fontWeight: "600",
 // // //         borderRadius: "4px",
-// // //         cursor: "pointer",
+// // //         cursor: loading ? "not-allowed" : "pointer",
 // // //         marginTop: "10px",
 // // //     };
 
@@ -93,7 +350,7 @@
 // // //         <div style={page}>
 // // //             <form style={box} onSubmit={handleSubmit}>
 // // //                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-// // //                     <img src={logo} alt="Amethyst Store Logo" style={{ height: "60px" }} />
+// // //                     <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
 // // //                 </div>
 
 // // //                 <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -126,6 +383,7 @@
 // // //                     placeholder="Phone Number"
 // // //                     value={form.phone}
 // // //                     onChange={handleChange}
+// // //                     maxLength={10}
 // // //                     required
 // // //                 />
 
@@ -133,7 +391,7 @@
 // // //                     style={input}
 // // //                     type="password"
 // // //                     name="password"
-// // //                     placeholder="Password"
+// // //                     placeholder="Password (min 6 characters)"
 // // //                     value={form.password}
 // // //                     onChange={handleChange}
 // // //                     required
@@ -149,13 +407,12 @@
 // // //                     required
 // // //                 />
 
-// // //                 <button type="submit" style={button}>
-// // //                     Register
+// // //                 <button type="submit" style={button} disabled={loading}>
+// // //                     {loading ? "Registering..." : "Register"}
 // // //                 </button>
 
 // // //                 <p style={{ textAlign: "center", marginTop: "15px" }}>
-// // //                     Already have an account?
-// // //                     <Link to="/login"> Login</Link>
+// // //                     Already have an account? <Link to="/login">Login</Link>
 // // //                 </p>
 // // //             </form>
 // // //         </div>
@@ -179,39 +436,96 @@
 // //         confirm: "",
 // //     });
 
+// //     const [passwordError, setPasswordError] = useState("");
+// //     const [loading, setLoading] = useState(false);
+
 // //     const handleChange = (e) => {
-// //         setForm({ ...form, [e.target.name]: e.target.value });
+// //         const { name, value } = e.target;
+
+// //         // Phone: allow only numbers
+// //         if (name === "phone") {
+// //             const numericValue = value.replace(/\D/g, "");
+// //             setForm({ ...form, phone: numericValue });
+// //             return;
+// //         }
+
+// //         // Password live validation
+// //         if (name === "password") {
+// //             if (value.length < 6) {
+// //                 setPasswordError("Password must be at least 6 characters");
+// //             } else {
+// //                 setPasswordError("");
+// //             }
+// //         }
+
+// //         setForm({ ...form, [name]: value });
 // //     };
 
-// //     const generateOTP = () => {
-// //         return Math.floor(100000 + Math.random() * 900000).toString();
-// //     };
-
-// //     const handleSubmit = (e) => {
+// //     const handleSubmit = async (e) => {
 // //         e.preventDefault();
+
+// //         if (form.password.length < 6) {
+// //             alert("Password must be at least 6 characters long");
+// //             return;
+// //         }
 
 // //         if (form.password !== form.confirm) {
 // //             alert("Passwords do not match");
 // //             return;
 // //         }
 
-// //         const users = JSON.parse(localStorage.getItem("users") || "[]");
+// //         setLoading(true);
 
-// //         const exists = users.find((u) => u.email === form.email);
+// //         try {
+// //             const response = await fetch(
+// //                 "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+// //                 {
+// //                     method: "POST",
+// //                     headers: {
+// //                         "Content-Type": "application/json",
+// //                     },
+// //                     body: JSON.stringify({
+// //                         name: form.name,
+// //                         email: form.email,
+// //                         phone: form.phone,
+// //                         password: form.password,
+// //                     }),
+// //                 }
+// //             );
 
-// //         if (exists) {
-// //             alert("User already exists");
-// //             return;
+// //             const data = await response.json();
+
+// //             if (!response.ok) {
+// //                 alert(data.message || "Registration failed");
+// //                 setLoading(false);
+// //                 return;
+// //             }
+
+// //             localStorage.setItem(
+// //                 "pendingUser",
+// //                 JSON.stringify({
+// //                     name: form.name,
+// //                     email: form.email,
+// //                     phone: form.phone,
+// //                     password: form.password,
+// //                 })
+// //             );
+
+// //             alert(data.message || "Registration successful. OTP sent.");
+
+// //             navigate("/otp", {
+// //                 state: {
+// //                     email: form.email,
+// //                     phone: form.phone,
+// //                     from: "register",
+// //                 },
+// //             });
+// //         } catch (error) {
+// //             console.error("Register API error:", error);
+// //             alert("Something went wrong while registering");
+// //         } finally {
+// //             setLoading(false);
 // //         }
-
-// //         const otp = generateOTP();
-
-// //         localStorage.setItem("pendingUser", JSON.stringify(form));
-// //         localStorage.setItem("otp", otp);
-
-// //         alert("Your OTP is: " + otp); // demo purpose
-
-// //         navigate("/otp");
 // //     };
 
 // //     const page = {
@@ -221,6 +535,7 @@
 // //         padding: "40px 0",
 // //         background: "#fafafa",
 // //         fontFamily: "Arial, Helvetica, sans-serif",
+// //         minHeight: "100vh",
 // //     };
 
 // //     const box = {
@@ -234,7 +549,7 @@
 // //     const input = {
 // //         width: "100%",
 // //         height: "42px",
-// //         marginBottom: "12px",
+// //         marginBottom: "8px",
 // //         border: "1px solid #ddd",
 // //         padding: "0 12px",
 // //         borderRadius: "4px",
@@ -242,15 +557,21 @@
 // //         outline: "none",
 // //     };
 
+// //     const errorText = {
+// //         color: "red",
+// //         fontSize: "13px",
+// //         marginBottom: "10px",
+// //     };
+
 // //     const button = {
 // //         width: "100%",
 // //         height: "44px",
 // //         border: "none",
-// //         background: "#6f3f8f",
+// //         background: loading ? "#9b7bb1" : "#6f3f8f",
 // //         color: "#fff",
 // //         fontWeight: "600",
 // //         borderRadius: "4px",
-// //         cursor: "pointer",
+// //         cursor: loading ? "not-allowed" : "pointer",
 // //         marginTop: "10px",
 // //     };
 
@@ -258,24 +579,70 @@
 // //         <div style={page}>
 // //             <form style={box} onSubmit={handleSubmit}>
 // //                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-// //                     <img src={logo} alt="Logo" style={{ height: "60px" }} />
+// //                     <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
 // //                 </div>
 
 // //                 <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
 // //                     Create Account
 // //                 </h2>
 
-// //                 <input style={input} name="name" placeholder="Full Name" value={form.name} onChange={handleChange} required />
+// //                 <input
+// //                     style={input}
+// //                     name="name"
+// //                     placeholder="Full Name"
+// //                     value={form.name}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
 
-// //                 <input style={input} type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+// //                 <input
+// //                     style={input}
+// //                     type="email"
+// //                     name="email"
+// //                     placeholder="Email"
+// //                     value={form.email}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
 
-// //                 <input style={input} type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} required />
+// //                 <input
+// //                     style={input}
+// //                     type="tel"
+// //                     name="phone"
+// //                     placeholder="Phone Number"
+// //                     value={form.phone}
+// //                     onChange={handleChange}
+// //                     maxLength={10}
+// //                     required
+// //                 />
 
-// //                 <input style={input} type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} required />
+// //                 <input
+// //                     style={input}
+// //                     type="password"
+// //                     name="password"
+// //                     placeholder="Password"
+// //                     value={form.password}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
 
-// //                 <input style={input} type="password" name="confirm" placeholder="Confirm Password" value={form.confirm} onChange={handleChange} required />
+// //                 {passwordError && (
+// //                     <div style={errorText}>{passwordError}</div>
+// //                 )}
 
-// //                 <button type="submit" style={button}>Register</button>
+// //                 <input
+// //                     style={input}
+// //                     type="password"
+// //                     name="confirm"
+// //                     placeholder="Confirm Password"
+// //                     value={form.confirm}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
+
+// //                 <button type="submit" style={button} disabled={loading}>
+// //                     {loading ? "Registering..." : "Register"}
+// //                 </button>
 
 // //                 <p style={{ textAlign: "center", marginTop: "15px" }}>
 // //                     Already have an account? <Link to="/login">Login</Link>
@@ -284,6 +651,241 @@
 // //         </div>
 // //     );
 // // }
+
+
+
+
+// // import React, { useState } from "react";
+// // import { Link, useNavigate } from "react-router-dom";
+// // import logo from "../assets/femina.png";
+
+// // export default function Register() {
+// //     const navigate = useNavigate();
+
+// //     const [form, setForm] = useState({
+// //         name: "",
+// //         email: "",
+// //         phone: "",
+// //         password: "",
+// //         confirm: "",
+// //     });
+
+// //     const [passwordError, setPasswordError] = useState("");
+// //     const [loading, setLoading] = useState(false);
+
+// //     const handleChange = (e) => {
+// //         const { name, value } = e.target;
+
+// //         // Allow only numbers for phone
+// //         if (name === "phone") {
+// //             const numericValue = value.replace(/\D/g, "");
+// //             setForm({ ...form, phone: numericValue });
+// //             return;
+// //         }
+
+// //         // Password live validation
+// //         if (name === "password") {
+// //             if (value.length < 6) {
+// //                 setPasswordError("Password must be at least 6 characters");
+// //             } else {
+// //                 setPasswordError("");
+// //             }
+// //         }
+
+// //         setForm({ ...form, [name]: value });
+// //     };
+
+// //     const handleSubmit = async (e) => {
+// //         e.preventDefault();
+
+// //         if (form.password.length < 6) {
+// //             alert("Password must be at least 6 characters long");
+// //             return;
+// //         }
+
+// //         if (form.password !== form.confirm) {
+// //             alert("Passwords do not match");
+// //             return;
+// //         }
+
+// //         setLoading(true);
+
+// //         try {
+// //             const response = await fetch(
+// //                 "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+// //                 {
+// //                     method: "POST",
+// //                     headers: {
+// //                         "Content-Type": "application/json",
+// //                     },
+// //                     body: JSON.stringify({
+// //                         name: form.name,
+// //                         email: form.email,
+// //                         phone: form.phone,
+// //                         password: form.password,
+// //                     }),
+// //                 }
+// //             );
+
+// //             const data = await response.json();
+
+// //             if (!response.ok) {
+// //                 alert(data.message || "Registration failed");
+// //                 setLoading(false);
+// //                 return;
+// //             }
+
+// //             localStorage.setItem(
+// //                 "pendingUser",
+// //                 JSON.stringify({
+// //                     name: form.name,
+// //                     email: form.email,
+// //                     phone: form.phone,
+// //                     password: form.password,
+// //                 })
+// //             );
+
+// //             alert(data.message || "Registration successful. OTP sent.");
+
+// //             navigate("/otp", {
+// //                 state: {
+// //                     email: form.email,
+// //                     phone: form.phone,
+// //                     from: "register",
+// //                 },
+// //             });
+// //         } catch (error) {
+// //             console.error("Register API error:", error);
+// //             alert("Something went wrong while registering");
+// //         } finally {
+// //             setLoading(false);
+// //         }
+// //     };
+
+// //     const page = {
+// //         display: "flex",
+// //         justifyContent: "center",
+// //         alignItems: "center",
+// //         background: "#fafafa",
+// //         fontFamily: "Arial, Helvetica, sans-serif",
+// //         minHeight: "100vh",
+// //         margin: 0,
+// //     };
+
+// //     const box = {
+// //         width: "380px",
+// //         background: "#fff",
+// //         padding: "40px",
+// //         borderRadius: "8px",
+// //         boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+// //     };
+
+// //     const input = {
+// //         width: "100%",
+// //         height: "42px",
+// //         marginBottom: "8px",
+// //         border: "1px solid #ddd",
+// //         padding: "0 12px",
+// //         borderRadius: "4px",
+// //         boxSizing: "border-box",
+// //         outline: "none",
+// //     };
+
+// //     const errorText = {
+// //         color: "red",
+// //         fontSize: "13px",
+// //         marginBottom: "10px",
+// //     };
+
+// //     const button = {
+// //         width: "100%",
+// //         height: "44px",
+// //         border: "none",
+// //         background: loading ? "#9b7bb1" : "#6f3f8f",
+// //         color: "#fff",
+// //         fontWeight: "600",
+// //         borderRadius: "4px",
+// //         cursor: loading ? "not-allowed" : "pointer",
+// //         marginTop: "10px",
+// //     };
+
+// //     return (
+// //         <div style={page}>
+// //             <form style={box} onSubmit={handleSubmit}>
+// //                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
+// //                     <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
+// //                 </div>
+
+// //                 <h2 style={{ textAlign: "center", marginBottom: "15px", marginTop: "0" }}>
+// //                     Create Account
+// //                 </h2>
+
+// //                 <input
+// //                     style={input}
+// //                     name="name"
+// //                     placeholder="Full Name"
+// //                     value={form.name}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
+
+// //                 <input
+// //                     style={input}
+// //                     type="email"
+// //                     name="email"
+// //                     placeholder="Email"
+// //                     value={form.email}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
+
+// //                 <input
+// //                     style={input}
+// //                     type="tel"
+// //                     name="phone"
+// //                     placeholder="Phone Number"
+// //                     value={form.phone}
+// //                     onChange={handleChange}
+// //                     maxLength={10}
+// //                     required
+// //                 />
+
+// //                 <input
+// //                     style={input}
+// //                     type="password"
+// //                     name="password"
+// //                     placeholder="Password"
+// //                     value={form.password}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
+
+// //                 {passwordError && (
+// //                     <div style={errorText}>{passwordError}</div>
+// //                 )}
+
+// //                 <input
+// //                     style={input}
+// //                     type="password"
+// //                     name="confirm"
+// //                     placeholder="Confirm Password"
+// //                     value={form.confirm}
+// //                     onChange={handleChange}
+// //                     required
+// //                 />
+
+// //                 <button type="submit" style={button} disabled={loading}>
+// //                     {loading ? "Registering..." : "Register"}
+// //                 </button>
+
+// //                 <p style={{ textAlign: "center", marginTop: "15px" }}>
+// //                     Already have an account? <Link to="/login">Login</Link>
+// //                 </p>
+// //             </form>
+// //         </div>
+// //     );
+// // }
+
 
 
 
@@ -302,62 +904,123 @@
 //         confirm: "",
 //     });
 
+//     const [passwordError, setPasswordError] = useState("");
+//     const [loading, setLoading] = useState(false);
+
 //     const handleChange = (e) => {
-//         setForm({ ...form, [e.target.name]: e.target.value });
+//         const { name, value } = e.target;
+
+//         if (name === "phone") {
+//             const numericValue = value.replace(/\D/g, "");
+//             setForm({ ...form, phone: numericValue });
+//             return;
+//         }
+
+//         if (name === "password") {
+//             if (value.length < 6) {
+//                 setPasswordError("Password must be at least 6 characters");
+//             } else {
+//                 setPasswordError("");
+//             }
+//         }
+
+//         setForm({ ...form, [name]: value });
 //     };
 
-//     const handleSubmit = (e) => {
+//     const handleSubmit = async (e) => {
 //         e.preventDefault();
+
+//         if (form.password.length < 6) {
+//             alert("Password must be at least 6 characters long");
+//             return;
+//         }
 
 //         if (form.password !== form.confirm) {
 //             alert("Passwords do not match");
 //             return;
 //         }
 
-//         const users = JSON.parse(localStorage.getItem("users") || "[]");
+//         setLoading(true);
 
-//         const exists = users.find((u) => u.email === form.email);
+//         try {
+//             const response = await fetch(
+//                 "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+//                 {
+//                     method: "POST",
+//                     headers: {
+//                         "Content-Type": "application/json",
+//                     },
+//                     body: JSON.stringify({
+//                         name: form.name,
+//                         email: form.email,
+//                         phone: form.phone,
+//                         password: form.password,
+//                     }),
+//                 }
+//             );
 
-//         if (exists) {
-//             alert("User already exists");
-//             return;
+//             const data = await response.json();
+
+//             if (!response.ok) {
+//                 alert(data.message || "Registration failed");
+//                 setLoading(false);
+//                 return;
+//             }
+
+//             localStorage.setItem(
+//                 "pendingUser",
+//                 JSON.stringify({
+//                     name: form.name,
+//                     email: form.email,
+//                     phone: form.phone,
+//                     password: form.password,
+//                 })
+//             );
+
+//             alert(data.message || "Registration successful. OTP sent.");
+
+//             navigate("/otp", {
+//                 state: {
+//                     email: form.email,
+//                     phone: form.phone,
+//                     from: "register",
+//                 },
+//             });
+//         } catch (error) {
+//             console.error("Register API error:", error);
+//             alert("Something went wrong while registering");
+//         } finally {
+//             setLoading(false);
 //         }
-
-//         users.push({
-//             name: form.name,
-//             email: form.email,
-//             phone: form.phone,
-//             password: form.password,
-//         });
-
-//         localStorage.setItem("users", JSON.stringify(users));
-
-//         navigate("/otp", {
-//             state: { email: form.email },
-//         });
 //     };
 
 //     const page = {
+//         width: "100%",
+//         minHeight: "100vh",
+//         margin: 0,
 //         display: "flex",
 //         justifyContent: "center",
 //         alignItems: "center",
-//         padding: "40px 0",
 //         background: "#fafafa",
 //         fontFamily: "Arial, Helvetica, sans-serif",
+//         padding: "0 16px",
+//         boxSizing: "border-box",
 //     };
 
 //     const box = {
-//         width: "380px",
+//         width: "100%",
+//         maxWidth: "380px",
 //         background: "#fff",
 //         padding: "40px",
 //         borderRadius: "8px",
 //         boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+//         boxSizing: "border-box",
 //     };
 
 //     const input = {
 //         width: "100%",
 //         height: "42px",
-//         marginBottom: "12px",
+//         marginBottom: "8px",
 //         border: "1px solid #ddd",
 //         padding: "0 12px",
 //         borderRadius: "4px",
@@ -365,15 +1028,21 @@
 //         outline: "none",
 //     };
 
+//     const errorText = {
+//         color: "red",
+//         fontSize: "13px",
+//         marginBottom: "10px",
+//     };
+
 //     const button = {
 //         width: "100%",
 //         height: "44px",
 //         border: "none",
-//         background: "#6f3f8f",
+//         background: loading ? "#9b7bb1" : "#6f3f8f",
 //         color: "#fff",
 //         fontWeight: "600",
 //         borderRadius: "4px",
-//         cursor: "pointer",
+//         cursor: loading ? "not-allowed" : "pointer",
 //         marginTop: "10px",
 //     };
 
@@ -381,10 +1050,10 @@
 //         <div style={page}>
 //             <form style={box} onSubmit={handleSubmit}>
 //                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-//                     <img src={logo} alt="Logo" style={{ height: "60px" }} />
+//                     <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
 //                 </div>
 
-//                 <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+//                 <h2 style={{ textAlign: "center", marginBottom: "15px", marginTop: 0 }}>
 //                     Create Account
 //                 </h2>
 
@@ -414,6 +1083,7 @@
 //                     placeholder="Phone Number"
 //                     value={form.phone}
 //                     onChange={handleChange}
+//                     maxLength={10}
 //                     required
 //                 />
 
@@ -427,6 +1097,8 @@
 //                     required
 //                 />
 
+//                 {passwordError && <div style={errorText}>{passwordError}</div>}
+
 //                 <input
 //                     style={input}
 //                     type="password"
@@ -437,11 +1109,11 @@
 //                     required
 //                 />
 
-//                 <button type="submit" style={button}>
-//                     Register
+//                 <button type="submit" style={button} disabled={loading}>
+//                     {loading ? "Registering..." : "Register"}
 //                 </button>
 
-//                 <p style={{ textAlign: "center", marginTop: "15px" }}>
+//                 <p style={{ textAlign: "center", marginTop: "15px", marginBottom: 0 }}>
 //                     Already have an account? <Link to="/login">Login</Link>
 //                 </p>
 //             </form>
@@ -452,7 +1124,252 @@
 
 
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import logo from "../assets/femina.png";
+
+// export default function Register() {
+//   const navigate = useNavigate();
+
+//   const [form, setForm] = useState({
+//     name: "",
+//     email: "",
+//     phone: "",
+//     password: "",
+//     confirm: "",
+//   });
+
+//   const [passwordError, setPasswordError] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+
+//     // allow only numbers for phone
+//     if (name === "phone") {
+//       const numericValue = value.replace(/\D/g, "");
+//       setForm({ ...form, phone: numericValue });
+//       return;
+//     }
+
+//     // password validation while typing
+//     if (name === "password") {
+//       if (value.length < 6) {
+//         setPasswordError("Password must be at least 6 characters");
+//       } else {
+//         setPasswordError("");
+//       }
+//     }
+
+//     setForm({ ...form, [name]: value });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (form.password.length < 6) {
+//       alert("Password must be at least 6 characters long");
+//       return;
+//     }
+
+//     if (form.password !== form.confirm) {
+//       alert("Passwords do not match");
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const response = await fetch(
+//         "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             name: form.name,
+//             email: form.email,
+//             phone: form.phone,
+//             password: form.password,
+//           }),
+//         }
+//       );
+
+//       const data = await response.json();
+
+//       if (!response.ok) {
+//         alert(data.message || "Registration failed");
+//         setLoading(false);
+//         return;
+//       }
+
+//       localStorage.setItem(
+//         "pendingUser",
+//         JSON.stringify({
+//           name: form.name,
+//           email: form.email,
+//           phone: form.phone,
+//           password: form.password,
+//         })
+//       );
+
+//       alert(data.message || "Registration successful. OTP sent.");
+
+//       navigate("/otp", {
+//         state: {
+//           email: form.email,
+//           phone: form.phone,
+//           from: "register",
+//         },
+//       });
+//     } catch (error) {
+//       console.error("Register API error:", error);
+//       alert("Something went wrong while registering");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const page = {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     minHeight: "60vh",
+//     paddingTop: "40px",
+//     paddingBottom: "40px",
+//     background: "#fafafa",
+//     fontFamily: "Arial, Helvetica, sans-serif",
+//   };
+
+//   const box = {
+//     width: "360px",
+//     background: "#fff",
+//     padding: "28px 30px",
+//     borderRadius: "8px",
+//     boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+//   };
+
+//   const input = {
+//     width: "100%",
+//     height: "42px",
+//     marginBottom: "16px",
+//     border: "1px solid #ddd",
+//     padding: "0 12px",
+//     borderRadius: "4px",
+//     boxSizing: "border-box",
+//     outline: "none",
+//   };
+
+//   const errorText = {
+//     color: "red",
+//     fontSize: "13px",
+//     marginTop: "-10px",
+//     marginBottom: "14px",
+//   };
+
+//   const button = {
+//     width: "100%",
+//     height: "44px",
+//     border: "none",
+//     background: loading ? "#9b7bb1" : "#6f3f8f",
+//     color: "#fff",
+//     fontWeight: "600",
+//     borderRadius: "4px",
+//     cursor: loading ? "not-allowed" : "pointer",
+//     marginTop: "6px",
+//   };
+
+//   const title = {
+//     textAlign: "center",
+//     marginBottom: "18px",
+//   };
+
+//   const loginText = {
+//     textAlign: "center",
+//     marginTop: "16px",
+//     fontSize: "14px",
+//   };
+
+//   return (
+//     <div style={page}>
+//       <form style={box} onSubmit={handleSubmit}>
+//         <div style={{ textAlign: "center", marginBottom: "16px" }}>
+//           <img src={logo} alt="Femina Logo" style={{ height: "55px" }} />
+//         </div>
+
+//         <h2 style={title}>Create Account</h2>
+
+//         <input
+//           style={input}
+//           name="name"
+//           placeholder="Full Name"
+//           value={form.name}
+//           onChange={handleChange}
+//           required
+//         />
+
+//         <input
+//           style={input}
+//           type="email"
+//           name="email"
+//           placeholder="Email"
+//           value={form.email}
+//           onChange={handleChange}
+//           required
+//         />
+
+//         <input
+//           style={input}
+//           type="tel"
+//           name="phone"
+//           placeholder="Phone Number"
+//           value={form.phone}
+//           onChange={handleChange}
+//           maxLength={10}
+//           required
+//         />
+
+//         <input
+//           style={input}
+//           type="password"
+//           name="password"
+//           placeholder="Password"
+//           value={form.password}
+//           onChange={handleChange}
+//           required
+//         />
+
+//         {passwordError && <div style={errorText}>{passwordError}</div>}
+
+//         <input
+//           style={input}
+//           type="password"
+//           name="confirm"
+//           placeholder="Confirm Password"
+//           value={form.confirm}
+//           onChange={handleChange}
+//           required
+//         />
+
+//         <button type="submit" style={button} disabled={loading}>
+//           {loading ? "Registering..." : "Register"}
+//         </button>
+
+//         <p style={loginText}>
+//           Already have an account?{" "}
+//           <Link to="/login" style={{ color: "#6f3f8f" }}>
+//             Login
+//           </Link>
+//         </p>
+//       </form>
+//     </div>
+//   );
+// }
+
+
+
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/femina.png";
 
@@ -467,95 +1384,191 @@ export default function Register() {
     confirm: "",
   });
 
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = screenWidth <= 480;
+  const isTablet = screenWidth > 480 && screenWidth <= 768;
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // allow only numbers for phone
+    if (name === "phone") {
+      const numericValue = value.replace(/\D/g, "");
+      setForm({ ...form, phone: numericValue });
+      return;
+    }
+
+    // password validation while typing
+    if (name === "password") {
+      if (value.length < 6) {
+        setPasswordError("Password must be at least 6 characters");
+      } else {
+        setPasswordError("");
+      }
+    }
+
+    setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (form.password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
 
     if (form.password !== form.confirm) {
       alert("Passwords do not match");
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    setLoading(true);
 
-    const exists = users.find((u) => u.email === form.email);
+    try {
+      const response = await fetch(
+        "https://initially-loamless-elroy.ngrok-free.dev/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            phone: form.phone,
+            password: form.password,
+          }),
+        }
+      );
 
-    if (exists) {
-      alert("User already exists");
-      return;
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Registration failed");
+        setLoading(false);
+        return;
+      }
+
+      localStorage.setItem(
+        "pendingUser",
+        JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          password: form.password,
+        })
+      );
+
+      alert(data.message || "Registration successful. OTP sent.");
+
+      navigate("/otp", {
+        state: {
+          email: form.email,
+          phone: form.phone,
+          from: "register",
+        },
+      });
+    } catch (error) {
+      console.error("Register API error:", error);
+      alert("Something went wrong while registering");
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem(
-      "pendingUser",
-      JSON.stringify({
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        password: form.password,
-      })
-    );
-
-    navigate("/otp", {
-      state: {
-        email: form.email,
-        from: "register",
-      },
-    });
   };
 
   const page = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "40px 0",
+    minHeight: "100vh",
+    paddingTop: isMobile ? "20px" : "40px",
+    paddingBottom: isMobile ? "20px" : "40px",
+    paddingLeft: isMobile ? "14px" : isTablet ? "20px" : "24px",
+    paddingRight: isMobile ? "14px" : isTablet ? "20px" : "24px",
     background: "#fafafa",
     fontFamily: "Arial, Helvetica, sans-serif",
+    boxSizing: "border-box",
   };
 
   const box = {
-    width: "380px",
+    width: "100%",
+    maxWidth: isMobile ? "100%" : isTablet ? "420px" : "360px",
     background: "#fff",
-    padding: "40px",
-    borderRadius: "8px",
+    padding: isMobile ? "22px 18px" : isTablet ? "26px 24px" : "28px 30px",
+    borderRadius: isMobile ? "6px" : "8px",
     boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+    boxSizing: "border-box",
   };
 
   const input = {
     width: "100%",
-    height: "42px",
-    marginBottom: "12px",
+    height: isMobile ? "40px" : "42px",
+    marginBottom: "16px",
     border: "1px solid #ddd",
     padding: "0 12px",
     borderRadius: "4px",
     boxSizing: "border-box",
     outline: "none",
+    fontSize: isMobile ? "14px" : "15px",
+  };
+
+  const errorText = {
+    color: "red",
+    fontSize: "13px",
+    marginTop: "-10px",
+    marginBottom: "14px",
   };
 
   const button = {
     width: "100%",
-    height: "44px",
+    height: isMobile ? "42px" : "44px",
     border: "none",
-    background: "#6f3f8f",
+    background: loading ? "#9b7bb1" : "#6f3f8f",
     color: "#fff",
     fontWeight: "600",
+    fontSize: isMobile ? "14px" : "15px",
     borderRadius: "4px",
-    cursor: "pointer",
-    marginTop: "10px",
+    cursor: loading ? "not-allowed" : "pointer",
+    marginTop: "6px",
+  };
+
+  const title = {
+    textAlign: "center",
+    marginBottom: "18px",
+    fontSize: isMobile ? "24px" : isTablet ? "27px" : "30px",
+  };
+
+  const loginText = {
+    textAlign: "center",
+    marginTop: "16px",
+    fontSize: isMobile ? "13px" : "14px",
+    lineHeight: "1.5",
+  };
+
+  const logoStyle = {
+    height: isMobile ? "45px" : isTablet ? "50px" : "55px",
+    maxWidth: "100%",
+    objectFit: "contain",
   };
 
   return (
     <div style={page}>
       <form style={box} onSubmit={handleSubmit}>
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <img src={logo} alt="Femina Logo" style={{ height: "60px" }} />
+        <div style={{ textAlign: "center", marginBottom: "16px" }}>
+          <img src={logo} alt="Femina Logo" style={logoStyle} />
         </div>
 
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Create Account
-        </h2>
+        <h2 style={title}>Create Account</h2>
 
         <input
           style={input}
@@ -583,6 +1596,7 @@ export default function Register() {
           placeholder="Phone Number"
           value={form.phone}
           onChange={handleChange}
+          maxLength={10}
           required
         />
 
@@ -596,6 +1610,8 @@ export default function Register() {
           required
         />
 
+        {passwordError && <div style={errorText}>{passwordError}</div>}
+
         <input
           style={input}
           type="password"
@@ -606,12 +1622,15 @@ export default function Register() {
           required
         />
 
-        <button type="submit" style={button}>
-          Register
+        <button type="submit" style={button} disabled={loading}>
+          {loading ? "Registering..." : "Register"}
         </button>
 
-        <p style={{ textAlign: "center", marginTop: "15px" }}>
-          Already have an account? <Link to="/login">Login</Link>
+        <p style={loginText}>
+          Already have an account?{" "}
+          <Link to="/login" style={{ color: "#6f3f8f", textDecoration: "none" }}>
+            Login
+          </Link>
         </p>
       </form>
     </div>

@@ -15,7 +15,7 @@ import OtpPage from "./auth/OtpPage";
 import Profile from "./auth/Profile";
 
 import Register from "./auth/Register";
-import ForgetPassword from "./auth/ForgetPassword";
+import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 
 function App() {
@@ -46,8 +46,8 @@ function App() {
         {/* Profile */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
 
       </Routes>

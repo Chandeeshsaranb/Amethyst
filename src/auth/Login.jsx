@@ -1,103 +1,3 @@
-
-// // import React, { useState } from "react";
-// // import { useNavigate } from "react-router-dom";
-// // import logo from "../assets/femina.png";
-
-// // export default function Login() {
-// //   const navigate = useNavigate();
-// //   const [email, setEmail] = useState("");
-
-// //   const handleSubmit = (e) => {
-// //     e.preventDefault();
-
-// //     if (!email) {
-// //       alert("Please enter your email");
-// //       return;
-// //     }
-
-// //     navigate("/otp", { state: { email } });
-// //   };
-
-// //   const page = {
-// //     display: "flex",
-// //     justifyContent: "center",
-// //     alignItems: "center",
-// //     minHeight: "60vh",
-// //     paddingTop: "40px",
-// //     paddingBottom: "40px",
-// //     background: "#fafafa",
-// //     fontFamily: "Arial, Helvetica, sans-serif",
-// //   };
-
-// //   const box = {
-// //     width: "360px",
-// //     background: "#fff",
-// //     padding: "28px 30px",
-// //     borderRadius: "8px",
-// //     boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-// //   };
-
-// //   const input = {
-// //     width: "100%",
-// //     height: "42px",
-// //     marginBottom: "16px",
-// //     border: "1px solid #ddd",
-// //     padding: "0 12px",
-// //     borderRadius: "4px",
-// //     boxSizing: "border-box",
-// //     outline: "none",
-// //   };
-
-// //   const button = {
-// //     width: "100%",
-// //     height: "44px",
-// //     border: "none",
-// //     background: "#6f3f8f",
-// //     color: "#fff",
-// //     fontWeight: "600",
-// //     borderRadius: "4px",
-// //     cursor: "pointer",
-// //     marginTop: "6px",
-// //   };
-
-// //   const title = {
-// //     textAlign: "center",
-// //     marginBottom: "18px",
-// //   };
-
-// //   return (
-// //     <div style={page}>
-// //       <form style={box} onSubmit={handleSubmit}>
-// //         <div style={{ textAlign: "center", marginBottom: "16px" }}>
-// //           <img
-// //             src={logo}
-// //             alt="Femian Logo"
-// //             style={{ height: "55px" }}
-// //           />
-// //         </div>
-
-// //         <h2 style={title}>Login</h2>
-
-// //         <input
-// //           style={input}
-// //           type="email"
-// //           placeholder="Email"
-// //           value={email}
-// //           onChange={(e) => setEmail(e.target.value)}
-// //           required
-// //         />
-
-// //         <button type="submit" style={button}>
-// //           Continue
-// //         </button>
-// //       </form>
-// //     </div>
-// //   );
-// // }
-
-
-
-
 // import React, { useState } from "react";
 // import { useNavigate, Link } from "react-router-dom";
 // import logo from "../assets/femina.png";
@@ -110,27 +10,63 @@
 //     password: "",
 //   });
 
+//   const [loading, setLoading] = useState(false);
+
 //   const handleChange = (e) => {
 //     setForm({ ...form, [e.target.name]: e.target.value });
 //   };
 
-//   const handleSubmit = (e) => {
+//   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
-//     const users = JSON.parse(localStorage.getItem("users") || "[]");
+//     setLoading(true);
 
-//     const user = users.find(
-//       (u) => u.email === form.email && u.password === form.password
-//     );
+//     try {
+//       const response = await fetch(
+//         "https://initially-loamless-elroy.ngrok-free.dev/api/login",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             email: form.email,
+//             password: form.password,
+//           }),
+//         }
+//       );
 
-//     if (!user) {
-//       alert("Invalid email or password");
-//       return;
+//       const data = await response.json();
+
+//       if (!response.ok) {
+//         alert(data.message || "Invalid email or password");
+//         return;
+//       }
+
+//       if (data.user) {
+//         localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+//       }
+
+//       if (data.token) {
+//         localStorage.setItem("token", data.token);
+//       }
+
+//       alert(data.message || "Login successful");
+
+//       // ROLE BASED REDIRECT
+//       if (data.user?.role === "admin") {
+//         navigate("/admin");
+//       } else {
+//         navigate("/profile");
+//       }
+
+//       window.scrollTo(0, 0);
+//     } catch (error) {
+//       console.error("Login API error:", error);
+//       alert("Something went wrong while logging in");
+//     } finally {
+//       setLoading(false);
 //     }
-
-//     localStorage.setItem("loggedInUser", JSON.stringify(user));
-//     navigate("/profile");
-//     window.scrollTo(0, 0);
 //   };
 
 //   const page = {
@@ -167,11 +103,11 @@
 //     width: "100%",
 //     height: "44px",
 //     border: "none",
-//     background: "#6f3f8f",
+//     background: loading ? "#9b7bb1" : "#6f3f8f",
 //     color: "#fff",
 //     fontWeight: "600",
 //     borderRadius: "4px",
-//     cursor: "pointer",
+//     cursor: loading ? "not-allowed" : "pointer",
 //     marginTop: "6px",
 //   };
 
@@ -197,11 +133,7 @@
 //     <div style={page}>
 //       <form style={box} onSubmit={handleSubmit}>
 //         <div style={{ textAlign: "center", marginBottom: "16px" }}>
-//           <img
-//             src={logo}
-//             alt="Femina Logo"
-//             style={{ height: "55px" }}
-//           />
+//           <img src={logo} alt="Femina Logo" style={{ height: "55px" }} />
 //         </div>
 
 //         <h2 style={title}>Login</h2>
@@ -227,13 +159,16 @@
 //         />
 
 //         <div style={forgotText}>
-//           <Link to="/forget-password" style={{ color: "#6f3f8f", textDecoration: "none" }}>
+//           <Link
+//             to="/forgot-password"
+//             style={{ color: "#6f3f8f", textDecoration: "none" }}
+//           >
 //             Forgot Password?
 //           </Link>
 //         </div>
 
-//         <button type="submit" style={button}>
-//           Login
+//         <button type="submit" style={button} disabled={loading}>
+//           {loading ? "Logging in..." : "Login"}
 //         </button>
 
 //         <p style={registerText}>
@@ -249,7 +184,7 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../assets/femina.png";
 
@@ -261,94 +196,157 @@ export default function Login() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = screenWidth <= 480;
+  const isTablet = screenWidth > 480 && screenWidth <= 768;
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    setLoading(true);
 
-    const user = users.find(
-      (u) => u.email === form.email && u.password === form.password
-    );
+    try {
+      const response = await fetch(
+        "https://initially-loamless-elroy.ngrok-free.dev/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: form.email,
+            password: form.password,
+          }),
+        }
+      );
 
-    if (!user) {
-      alert("Invalid email or password");
-      return;
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Invalid email or password");
+        return;
+      }
+
+      if (data.user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+      }
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      alert(data.message || "Login successful");
+
+      if (data.user?.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/profile");
+      }
+
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error("Login API error:", error);
+      alert("Something went wrong while logging in");
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-    navigate("/profile");
-    window.scrollTo(0, 0);
   };
 
   const page = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: "60vh",
-    paddingTop: "40px",
-    paddingBottom: "40px",
+    minHeight: "100vh",
+    paddingTop: isMobile ? "20px" : "40px",
+    paddingBottom: isMobile ? "20px" : "40px",
+    paddingLeft: isMobile ? "14px" : isTablet ? "20px" : "24px",
+    paddingRight: isMobile ? "14px" : isTablet ? "20px" : "24px",
     background: "#fafafa",
     fontFamily: "Arial, Helvetica, sans-serif",
+    boxSizing: "border-box",
   };
 
   const box = {
-    width: "360px",
+    width: "100%",
+    maxWidth: isMobile ? "100%" : isTablet ? "420px" : "360px",
     background: "#fff",
-    padding: "28px 30px",
-    borderRadius: "8px",
+    padding: isMobile ? "22px 18px" : isTablet ? "26px 24px" : "28px 30px",
+    borderRadius: isMobile ? "6px" : "8px",
     boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+    boxSizing: "border-box",
   };
 
   const input = {
     width: "100%",
-    height: "42px",
+    height: isMobile ? "40px" : "42px",
     marginBottom: "16px",
     border: "1px solid #ddd",
     padding: "0 12px",
     borderRadius: "4px",
     boxSizing: "border-box",
     outline: "none",
+    fontSize: isMobile ? "14px" : "15px",
   };
 
   const button = {
     width: "100%",
-    height: "44px",
+    height: isMobile ? "42px" : "44px",
     border: "none",
-    background: "#6f3f8f",
+    background: loading ? "#9b7bb1" : "#6f3f8f",
     color: "#fff",
     fontWeight: "600",
+    fontSize: isMobile ? "14px" : "15px",
     borderRadius: "4px",
-    cursor: "pointer",
+    cursor: loading ? "not-allowed" : "pointer",
     marginTop: "6px",
   };
 
   const title = {
     textAlign: "center",
     marginBottom: "18px",
+    fontSize: isMobile ? "24px" : isTablet ? "27px" : "30px",
   };
 
   const forgotText = {
     textAlign: "right",
     marginTop: "-8px",
     marginBottom: "14px",
-    fontSize: "14px",
+    fontSize: isMobile ? "13px" : "14px",
   };
 
   const registerText = {
     textAlign: "center",
     marginTop: "16px",
-    fontSize: "14px",
+    fontSize: isMobile ? "13px" : "14px",
+    lineHeight: "1.5",
+  };
+
+  const logoStyle = {
+    height: isMobile ? "45px" : isTablet ? "50px" : "55px",
+    maxWidth: "100%",
+    objectFit: "contain",
   };
 
   return (
     <div style={page}>
       <form style={box} onSubmit={handleSubmit}>
         <div style={{ textAlign: "center", marginBottom: "16px" }}>
-          <img src={logo} alt="Femina Logo" style={{ height: "55px" }} />
+          <img src={logo} alt="Femina Logo" style={logoStyle} />
         </div>
 
         <h2 style={title}>Login</h2>
@@ -375,20 +373,23 @@ export default function Login() {
 
         <div style={forgotText}>
           <Link
-            to="/forget-password"
+            to="/forgot-password"
             style={{ color: "#6f3f8f", textDecoration: "none" }}
           >
             Forgot Password?
           </Link>
         </div>
 
-        <button type="submit" style={button}>
-          Login
+        <button type="submit" style={button} disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
         </button>
 
         <p style={registerText}>
           Don&apos;t have an account?{" "}
-          <Link to="/register" style={{ color: "#6f3f8f" }}>
+          <Link
+            to="/register"
+            style={{ color: "#6f3f8f", textDecoration: "none" }}
+          >
             Register
           </Link>
         </p>
