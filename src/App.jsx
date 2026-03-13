@@ -14,6 +14,10 @@ import AdminPage from "./Admin/AdminPage";
 import OtpPage from "./auth/OtpPage";
 import Profile from "./auth/Profile";
 
+import Register from "./auth/Register";
+import ForgetPassword from "./auth/ForgetPassword";
+import ResetPassword from "./auth/ResetPassword";
+
 function App() {
   const location = useLocation();
 
@@ -41,6 +45,11 @@ function App() {
 
         {/* Profile */}
         <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword/>} />
+
+
       </Routes>
 
       {!hideLayout && <Footer />}
