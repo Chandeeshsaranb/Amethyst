@@ -250,6 +250,8 @@ export default function Login() {
         localStorage.setItem("token", data.token);
       }
 
+      window.dispatchEvent(new Event("authChanged"));
+
       alert(data.message || "Login successful");
 
       if (data.user?.role === "admin") {
